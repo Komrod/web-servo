@@ -1,0 +1,16 @@
+{
+  "server": {
+    "port": "80",
+    "dir": "www/"
+  },
+  "log": {
+    "access": {
+      "enabled": true,
+      "path": "log/access.log"
+    },
+    "error": {
+      "enabled": true,
+      "path": "log/error.log"
+    }
+  }
+}

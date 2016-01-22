@@ -1,0 +1,20 @@
+{
+  "server": {
+    "port": "80",
+    "folder": "www"
+  },
+  "page": {
+      "script": "xjs",
+      "default": "index.html"
+    },
+  "log": {
+    "access": {
+      "enabled": true,
+      "path": "log/access.log"
+    },
+    "error": {
+      "enabled": true,
+      "path": "log/error.log"
+    }
+  }
+}
