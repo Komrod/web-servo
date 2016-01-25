@@ -73,6 +73,21 @@ The configuration file is a file "config.json" in the server directory. Server d
 }
 ```
 
+## Example
+
+Execute the example server :
+    
+    cd example/
+    node server.js
+
+The server is started. Open your browser and go to these locations:
+- http://localhost:80/            <-- index page (default page is index.html)
+- http://localhost:80/index.html  <-- index page directly
+- http://localhost:80/404.html    <-- Page not found
+- http://localhost:80/script.xjs  <-- script executed on the server, returns HTML
+- http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
+- http://localhost:80/error.xjs   <-- debug log on console
+
 ## TODO
 - Run multiple types of script
 - configure files for error pages
