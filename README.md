@@ -12,7 +12,7 @@ A simple Node js web server that is executing server sided JS scripts.
 
 ## Install
 
-**From node / nmp:**
+**From node / npm:**
 
     npm install web-servo
 Then in a script:
