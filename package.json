@@ -19,9 +19,6 @@
     "test": "node ./lib/web-servo.js test"
   },
   "dependencies": {
-    "fs": "*",
-    "os": "*",
-    "http": "*",
     "colors": "1.1.x",
     "mime": "1.3.x",
     "url": "0.11.x",
