@@ -8,12 +8,7 @@
     "type": "git",
     "url": "git://github.com/Komrod/web-servo.git"
   },
-  "keywords": [
-    "web",
-    "server",
-    "cli",
-    "command"
-  ],
+  "keywords": [ "js server", "javascript server", "node server", "node http server", "node web server", "web server", "web-server", "webserver", "http server", "web", "http", "server", "cli", "command"],
   "scripts": {
     "start": "node ./lib/web-servo.js",
     "test": "node ./lib/web-servo.js test"
