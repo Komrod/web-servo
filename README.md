@@ -42,7 +42,7 @@ Change server directory:
     
 ## Configuration file
 
-The configuration file is "config.json" in the server directory. The server directory is initialized to the working directory at startup.
+The configuration file "config.json" must be located in the server directory. The server directory is initialized to the working directory at startup.
 
 ```	
 {

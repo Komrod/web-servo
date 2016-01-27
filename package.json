@@ -1,7 +1,7 @@
 {
   "name": "web-servo",
-  "version": "0.0.1",
-  "description": "A simple web server running server sided JS",
+  "version": "0.1.1",
+  "description": "A simple web server running node scripts",
   "author": "Komrod <komrod@hotmail.com>",
   "main": "./lib/web-servo",
   "repository": {
