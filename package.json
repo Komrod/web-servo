@@ -1,14 +1,14 @@
 {
   "name": "web-servo",
   "version": "0.1.1",
-  "description": "A simple web server running node scripts",
+  "description": "A simple Node JS web server that is executing node JS scripts",
   "author": "Komrod <komrod@hotmail.com>",
   "main": "./lib/web-servo",
   "repository": {
     "type": "git",
     "url": "git://github.com/Komrod/web-servo.git"
   },
-  "keywords": [ "js server", "javascript server", "node server", "node http server", "node web server", "web server", "web-server", "webserver", "http server", "web", "http", "server", "cli", "command"],
+  "keywords": [ "servo", "web servo", "web-servo", "js server", "javascript server", "node server", "node http server", "node web server", "web server", "web-server", "webserver", "http server", "web", "http", "server", "cli", "command"],
   "scripts": {
     "start": "node ./lib/web-servo.js",
     "test": "node ./lib/web-servo.js test"
