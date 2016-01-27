@@ -1,12 +1,12 @@
 # web-servo
-A simple Node js web server that is executing server sided JS scripts.
+A simple Node js web server that is executing node JS scripts.
 
 ## Features
 - Easy to use, launch with one line of code
 - Configuration in a JSON file
 - Log management of errors and access
 - Working example
-- Executing node javascript file on the server
+- Executing node javascript file on the server and output result
 - Debug log to fix your node script file
 - Descriptive log on the console
 
@@ -28,7 +28,7 @@ Then in a script:
     
     var ws = require('../lib/web-servo');
 
-## Use
+## How to use
 
 Launch with one line of script:
     
@@ -42,32 +42,32 @@ Change server directory:
     
 ## Configuration file
 
-The configuration file is a file "config.json" in the server directory. Server directory is initialized to the working directory at startup.
+The configuration file is "config.json" in the server directory. The server directory is initialized to the working directory at startup.
 
 ```	
 {
   "server": {
-    "port": "80",					<-- port of the web server
-    "dir": "www/"					<-- directory of the server (from current dir)
+    "port": "80",					         <-- port of the web server
+    "dir": "www/"					         <-- directory of the server (from current dir)
   },
   "page": {
-    "script": "xjs",                <-- extension of the JS to execute server side
-    "default": "index.html"         <-- default page if none
+    "script": "xjs",               <-- extension of the JS to execute server side
+    "default": "index.html"        <-- default page if none
   },
   "log": {
     "access": {
-      "enabled": true,				<-- if access log is enabled
+      "enabled": true,				    <-- if access log is enabled
       "path": "log/access.log",		<-- path of the access log file
-      "console": false				<-- show access log in console
+      "console": false				    <-- show access log in console
     },
     "error": {
-      "enabled": true,				<-- if error log is enabled
+      "enabled": true,				    <-- if error log is enabled
       "path": "log/error.log",		<-- path of the error log
-      "console": true				<-- show error log in console
-      "debug": true,				<-- additional debug for error in script
+      "console": true				      <-- show error log in console
+      "debug": true,				      <-- additional debug for error in script
     },
     "warning": {
-      "enabled": true				<-- show warning log in console
+      "enabled": true				      <-- show warning log in console
     }
   }
 }
@@ -90,5 +90,9 @@ The server is started. Open your browser and go to these locations:
 
 ## TODO
 - Run multiple types of script
-- configure files for error pages
+- Configure files for error pages
+- Set server config from script
+- change a config parameter from script
 - Password protected directory
+- Chainable functions
+
