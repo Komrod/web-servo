@@ -87,13 +87,13 @@ The server is started. Open your browser and go to these locations:
 ## TODO
 
 - Launch silently, no console output
-- Run multiple types of script
 - Configure files for error pages
 - Set server config from script
 - change a config parameter from script
-- Password protected directory
 - Chainable functions
-- Full tutorial to set up a server
-- More examples of usefull scripts
+- Tutorial to set up a server from scratch
+- Tutorial to script, get POST data and upload files
 - Launch from command line
 - Change mime type of output page in a script
+- Password protected directory
+- Run multiple types of script
