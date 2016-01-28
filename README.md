@@ -103,14 +103,15 @@ The server is started. Open your browser and go to these locations:
 
 ## TODO
 
-- Launch silently, no console output
 - Configure files for error pages
 - Set server config from script
 - change a config parameter from script
-- Chainable functions
 - Tutorial to set up a server from scratch
 - Tutorial to script, get POST data and upload files
 - Launch from command line
 - Change mime type of output page in a script
 - Password protected directory
 - Run multiple types of script
+
+- × Launch silently, no console output
+- × Chainable functions
