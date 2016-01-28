@@ -35,7 +35,24 @@ Change server directory:
     var ws = require('web-servo');
     ws.setDir('../somedir/');
     ws.start();
-    
+
+## Methods
+
+1. setDir(dir)
+Set the dir of the server before start.
+- dir: {string} directory relative or absolute of the server
+Example: ws.setDir('./myServer/');
+
+2. silent(b)
+Set the silent mode on or off, no console output.
+- b: {bool} if true, set the silent mode on, default true
+Example: 
+``` 
+  ws.silent(); // silent mode set on
+  ws.silent(false); // silent mode set
+  ws.silent(true);
+``` 
+
 ## Configuration file
 
 The configuration file "config.json" must be located in the server directory. The server directory is initialized to the working directory at startup and can be changed.
