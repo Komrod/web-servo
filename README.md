@@ -1,7 +1,7 @@
 
 # web-servo
 
-A simple Node js web server that is executing node JS scripts.
+A simple HTTP web server executing node JS scripts.
 
 ## Features
 - Easy to use, launch with one line of code
@@ -124,18 +124,24 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
 - http://localhost:80/error.xjs   <-- debug log on console
 
+## Changelog
+
+**Version 0.1.2**
+- Configure files for error pages
+- Launch silently, no console output
+- Chainable functions
+
 ## TODO
 
 - Set server config from script
 - change a config parameter from script
+- Change mime type of output page in a script
 - Tutorial to set up a server from scratch
 - Tutorial to script, get POST data and upload files
-- Launch from command line
-- Change mime type of output page in a script
+- Tutorial for multiple servers
+- Launch from command line (port, dir ...)
 - Password protected directory
 - Run multiple types of script
-
-**Done:**
-- × Configure files for error pages
-- × Launch silently, no console output
-- × Chainable functions
+- Build an API REST
+- URL aliases
+- Timeout for a page / script
