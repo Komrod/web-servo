@@ -39,18 +39,33 @@ Change server directory:
 ## Methods
 
 1. setDir(dir)
-Set the dir of the server before start.
-- dir: {string} directory relative or absolute of the server
+Set the dir of the server before config() or start().
+- dir: {string} directory of the server, relative to working directory or absolute
 Example: ws.setDir('./myServer/');
 
-2. silent(b)
+2. config(file)
+Set the config for the server. If the file is omited, use the default file "config.json" in the server directory
+- file: {string} path to the file
+Example: ws.config();
+
+3. start()
+Start the server. Configure by default the server if config() wasn't called
+Example: ws.start();
+
+4. stop()
+Stop the server.
+Example: ws.stop();
+
+5. silent(b)
 Set the silent mode on or off, no console output.
 - b: {bool} if true, set the silent mode on, default true
-Example: 
+Example: ws.silent(); // silent mode set on
+
+**All methods are chainable.**
+Example:
 ``` 
-  ws.silent(); // silent mode set on
-  ws.silent(false); // silent mode set
-  ws.silent(true);
+  ws.silent().start(); // set server to silent mode and start
+  ws.setDir('./www-prod/').config('./config-prod.json'); // set server dir and load a config file
 ``` 
 
 ## Configuration file
@@ -61,11 +76,16 @@ The configuration file "config.json" must be located in the server directory. Th
 {
   "server": {
     "port": "80",					        <-- port of the web server
-    "dir": "www/"					        <-- directory of the server (from server dir)
+    "dir": "www/"					        <-- directory of the www root (from server dir)
   },
   "page": {
     "script": "xjs",              <-- extension of the JS to execute server side
-    "default": "index.html"       <-- default page if none
+    "default": "index.html",      <-- default page if none
+    "error": {
+      "401": "page/401.html",     <-- full path of the 401 error page
+      "404": "page/404.html",     <-- full path of the 404 error page
+      "500": "page/500.html"      <-- full path of the 500 error page
+    }
   },
   "log": {
     "access": {
@@ -103,7 +123,6 @@ The server is started. Open your browser and go to these locations:
 
 ## TODO
 
-- Configure files for error pages
 - Set server config from script
 - change a config parameter from script
 - Tutorial to set up a server from scratch
@@ -114,5 +133,6 @@ The server is started. Open your browser and go to these locations:
 - Run multiple types of script
 
 **Done:**
+- × Configure files for error pages
 - × Launch silently, no console output
 - × Chainable functions
