@@ -1,6 +1,6 @@
 {
   "name": "web-servo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple Node JS web server that is executing node JS scripts",
   "author": "Komrod <komrod@hotmail.com>",
   "main": "./lib/web-servo",
