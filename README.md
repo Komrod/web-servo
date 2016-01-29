@@ -113,5 +113,6 @@ The server is started. Open your browser and go to these locations:
 - Password protected directory
 - Run multiple types of script
 
+**Done:**
 - × Launch silently, no console output
 - × Chainable functions
