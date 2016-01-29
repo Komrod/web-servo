@@ -38,45 +38,48 @@ Change server directory:
 
 ## Methods
 
-1. setDir(dir)
+**1.** setDir(dir)
 Set the dir of the server before config() or start().
-- dir: {string} directory of the server, relative to working directory or absolute
-Example: ws.setDir('./myServer/');
+  **dir**: {string} directory of the server, relative to working directory or absolute
+  Example: ws.setDir('./myServer/');
 
-2. config(file)
+**2.** config(file)
 Set the config for the server. If the file is omited, use the default file "config.json" in the server directory
-- file: {string} path to the file
-Example: ws.config();
+  **file**: {string} path to the file
+  Example: ws.config();
 
-3. start()
+**3.** start()
 Start the server. Configure by default the server if config() wasn't called
-Example: ws.start();
+  Example: ws.start();
 
-4. stop()
+**4.** stop()
 Stop the server.
-Example: ws.stop();
+  Example: ws.stop();
 
-5. silent(b)
+**5.** silent(b)
 Set the silent mode on or off, no console output.
-- b: {bool} if true, set the silent mode on, default true
-Example: ws.silent(); // silent mode set on
+  **b**: {bool} if true, set the silent mode on, default true
+  Example: ws.silent(); // silent mode set on
 
-**All methods are chainable.**
+**All these methods are chainable.**
 Example:
 ``` 
-  ws.silent().start(); // set server to silent mode and start
-  ws.setDir('./www-prod/').config('./config-prod.json'); // set server dir and load a config file
+  // set server to silent mode and start
+  require('web-servo').silent().start(); 
+
+  // set server dir and load a config file
+  require('web-servo').setDir('./www-prod/').config('./config-prod.json'); 
 ``` 
 
 ## Configuration file
 
-The configuration file "config.json" must be located in the server directory. The server directory is initialized to the working directory at startup and can be changed.
+The configuration file "config.json" must be located in the server directory. The server directory is initialized to the working directory at startup and can be changed with the setDir() method. You can also load a different config file using the config() method.
 
 ```	
 {
   "server": {
-    "port": "80",					        <-- port of the web server
-    "dir": "www/"					        <-- directory of the www root (from server dir)
+    "port": "80",                 <-- port of the web server
+    "dir": "www/"                 <-- directory of the www root (from server dir)
   },
   "page": {
     "script": "xjs",              <-- extension of the JS to execute server side
@@ -89,18 +92,18 @@ The configuration file "config.json" must be located in the server directory. Th
   },
   "log": {
     "access": {
-      "enabled": true,				    <-- if access log is enabled
-      "path": "log/access.log",		<-- path of the access log file
-      "console": false				    <-- show access log in console
+      "enabled": true,            <-- if access log is enabled
+      "path": "log/access.log",   <-- path of the access log file
+      "console": false            <-- show access log in console
     },
     "error": {
-      "enabled": true,				    <-- if error log is enabled
-      "path": "log/error.log",		<-- path of the error log
-      "console": true				      <-- show error log in console
-      "debug": true,				      <-- additional debug for error in script
+      "enabled": true,            <-- if error log is enabled
+      "path": "log/error.log",    <-- path of the error log
+      "console": true             <-- show error log in console
+      "debug": true,              <-- additional debug for error in script
     },
     "warning": {
-      "enabled": true				      <-- show warning log in console
+      "enabled": true             <-- show warning log in console
     }
   }
 }
