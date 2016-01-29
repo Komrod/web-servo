@@ -16,7 +16,8 @@ node_modules
 ######################
 *.log
 *.sql
-example/log
+example/log/*
+
 # OS generated files #
 ######################
 .DS_Store
