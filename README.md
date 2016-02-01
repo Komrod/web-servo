@@ -3,6 +3,8 @@
 
 A simple HTTP web server executing node JS scripts.
 
+The server can return normal HTTP files (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
+
 ## Features
 - Easy to use, launch with one line of code
 - Configuration in a JSON file
@@ -15,51 +17,126 @@ A simple HTTP web server executing node JS scripts.
 ## Install
 
 **From node / npm:**
-
-    npm install web-servo
+``` 
+  npm install web-servo
+``` 
 
 **From GitHub:**
-
-    git clone https://github.com/Komrod/web-servo.git
-    cd web-servo
-    npm install
+``` 
+  git clone https://github.com/Komrod/web-servo.git
+  cd web-servo
+  npm install
+``` 
 
 ## How to use
 
 Launch the server with one line of script:
-    
-    require('web-servo').start();
+``` 
+  require('web-servo').start();
+``` 
 
 Change server directory:
+``` 
+  var ws = require('web-servo');
+  ws.setDir('../somedir/');
+  ws.start();
+``` 
 
-    var ws = require('web-servo');
-    ws.setDir('../somedir/');
-    ws.start();
+**For normal HTTP files:**
+When a client request a file, the server will return the content of the file to the client, if the extension does not match with the script file extension (by default .xjs). The returned mime type depends on the file extension.
+
+**For node script file:**
+When the client request a file with the script extension (by default .xjs), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
+
+**For unknown files:**
+If file is not here, server will return the 404 error page.
+
+
+Example XJS script that returns HTML:
+```
+  // As this script runs in the server, this will show in the console
+  console.log('test');
+
+  // to return HTML, we use module.exports
+  module.exports = function(request, response, parameters, ws) {
+    // request: HTTP request by client
+    // response: HTTP response of server
+    // parameters: GET and POST parameters
+    // ws: web-servo object
+
+    // Do something here, read some files ..
+    // Then return the HTML
+    return '<html><body>This is it!</body></html>';
+  };
+
+```
+
+Simple XJS script:
+```
+  // We don't use module.exports so we can't return anything
+  // We also don't know anything about the request (parameters, type ...)
+
+  // Here, you can user any istalled modules
+  fs.stat('/helloWorld.html', function (error, stast) {
+    if (error) {
+      // Trouble accessing the file.
+      return fs.appendFile('helloworld.log', 'File is NOT ok');
+    } else {
+      // Do something
+      return fs.appendFile('helloworld.log', 'File is ok');
+    }
+  });
+```
 
 ## Methods
 
-**1.** setDir(dir)
+### setDir(dir)
 Set the dir of the server before config() or start().
-  **dir**: {string} directory of the server, relative to working directory or absolute
-  Example: ws.setDir('./myServer/');
+**dir**: {string} directory of the server, relative to working directory or absolute
 
-**2.** config(file)
-Set the config for the server. If the file is omited, use the default file "config.json" in the server directory
-  **file**: {string} path to the file
-  Example: ws.config();
+Example: 
+``` 
+  ws.setDir('./myServer/');
+``` 
 
-**3.** start()
-Start the server. Configure by default the server if config() wasn't called
-  Example: ws.start();
+### config(file)
+Set the config for the server. Parameter can be a path to a config file or a config object. If parameter is omited, load the default file "config.json" in the server directory. If parameter is an object, consider it as the loaded config.
+**file**: {mixed} path to the file or object
 
-**4.** stop()
-Stop the server.
-  Example: ws.stop();
+Example: 
+``` 
+  // Load the default file "config.json" from server directory
+  ws.config();
 
-**5.** silent(b)
+  // Start server listening to port 9000
+  ws.config({server: {port: 9000}})
+``` 
+
+### start(callback)
+Start the server then call the callback function. Configure by default the server if config() wasn't called
+
+Example: 
+```
+  ws.start();
+```
+
+### stop(callback)
+Stop the server then call the callback function 
+
+Example: 
+```
+  ws.stop();
+```
+
+### silent(b)
 Set the silent mode on or off, no console output.
-  **b**: {bool} if true, set the silent mode on, default true
-  Example: ws.silent(); // silent mode set on
+**b**: {bool} if true, set the silent mode on, default true
+
+Example: 
+```
+  // silent mode set on
+  ws.silent(); 
+```
 
 **All these methods are chainable.**
 Example:
@@ -73,7 +150,7 @@ Example:
 
 ## Configuration file
 
-The configuration file "config.json" must be located in the server directory. The server directory is initialized to the working directory at startup and can be changed with the setDir() method. You can also load a different config file using the config() method.
+The configuration file "config.json" must be located in the server directory. The server directory is initialized to the working directory at startup and can be changed with the setDir() method. You can also load a different config file or load directly an object using the config() method.
 
 ```	
 {
@@ -126,6 +203,9 @@ The server is started. Open your browser and go to these locations:
 
 ## Changelog
 
+**Version 0.1.3**
+- Set server config from script
+
 **Version 0.1.2**
 - Configure files for error pages
 - Launch silently, no console output
@@ -133,11 +213,11 @@ The server is started. Open your browser and go to these locations:
 
 ## TODO
 
-- Set server config from script
-- change a config parameter from script
+- Change a config parameter from script
 - Change mime type of output page in a script
+- Get additional informations about the uploaded files
 - Tutorial to set up a server from scratch
-- Tutorial to script, get POST data and upload files
+- Tutorial to script, get POST data and uploaded files
 - Tutorial for multiple servers
 - Launch from command line (port, dir ...)
 - Password protected directory
