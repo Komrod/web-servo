@@ -108,7 +108,7 @@ Example:
   // Load the default file "config.json" from server directory
   ws.config();
 
-  // Start server listening to port 9000
+  // Configure server to listen to port 9000
   ws.config({server: {port: 9000}})
 ``` 
 
@@ -205,6 +205,7 @@ The server is started. Open your browser and go to these locations:
 
 **Version 0.1.3**
 - Set server config from script
+- Check if www root directory exists
 
 **Version 0.1.2**
 - Configure files for error pages
