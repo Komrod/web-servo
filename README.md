@@ -112,6 +112,17 @@ Example:
   ws.config({server: {port: 9000}})
 ``` 
 
+### setConfigVar(name, value)
+Set a configuration variable for the server.
+**name**: {string} name of the variable as in config file with dots "." if the variable is in an object
+**value**: {mixed} value
+
+Example: 
+``` 
+  // Change config to show access in console
+  .setConfigVar('log.access.console', true)
+``` 
+
 ### start(callback)
 Start the server then call the callback function. Configure by default the server if config() wasn't called
 
@@ -200,12 +211,16 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/script.xjs  <-- script executed on the server, returns HTML
 - http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
 - http://localhost:80/error.xjs   <-- debug log on console
+- http://localhost:80/json.xjs    <-- change the header response to content type "application/json"
 
 ## Changelog
 
-**Version 0.1.3**
+**Version 0.2**
 - Set server config from script
 - Check if www root directory exists
+- Fix error 404 on XJS script request
+- Change a config parameter from script
+- Change mime type of output page in a script
 
 **Version 0.1.2**
 - Configure files for error pages
@@ -214,8 +229,6 @@ The server is started. Open your browser and go to these locations:
 
 ## TODO
 
-- Change a config parameter from script
-- Change mime type of output page in a script
 - Get additional informations about the uploaded files
 - Tutorial to set up a server from scratch
 - Tutorial to script, get POST data and uploaded files
@@ -226,3 +239,5 @@ The server is started. Open your browser and go to these locations:
 - Build an API REST
 - URL aliases
 - Timeout for a page / script
+- Event system
+- Cache system
