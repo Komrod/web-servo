@@ -233,11 +233,11 @@ The server is started. Open your browser and go to these locations:
 - Tutorial to set up a server from scratch
 - Tutorial to script, get POST data and uploaded files
 - Tutorial for multiple servers
-- Launch from command line (port, dir ...)
 - Password protected directory
-- Run multiple types of script
-- Build an API REST
 - URL aliases
+- Build an API REST
 - Timeout for a page / script
 - Event system
+- Launch from command line (port, dir ...)
 - Cache system
+- Run multiple types of script (PHP)
