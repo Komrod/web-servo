@@ -200,9 +200,9 @@ The configuration file "config.json" must be located in the server directory. Th
 ## Example
 
 Execute the example server :
-    
-    cd example/
-    node server.js
+```
+    node example/server.js
+```
 
 The server is started. Open your browser and go to these locations:
 - http://localhost:80/            <-- index page (default page is index.html)
@@ -210,7 +210,7 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/404.html    <-- Page not found
 - http://localhost:80/script.xjs  <-- script executed on the server, returns HTML
 - http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
-- http://localhost:80/error.xjs   <-- debug log on console
+- http://localhost:80/error.xjs   <-- Error and debug log on console
 - http://localhost:80/json.xjs    <-- change the header response to content type "application/json"
 
 ## Changelog
