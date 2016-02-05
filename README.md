@@ -58,11 +58,6 @@ Example XJS script that returns HTML:
 
   // to return HTML, we use module.exports
   module.exports = function(request, response, parameters, ws) {
-    // request: HTTP request by client
-    // response: HTTP response of server
-    // parameters: GET and POST parameters
-    // ws: web-servo object
-
     // Do something here, read some files ..
     // Then return the HTML
     return '<html><body>This is it!</body></html>';
@@ -75,22 +70,82 @@ Simple XJS script:
   // We don't use module.exports so we can't return anything
   // We also don't know anything about the request (parameters, type ...)
 
-  // Here, you can user any istalled modules
+  // Here, you can use any installed modules
+  var fs = require('fs');
   fs.stat('/helloWorld.html', function (error, stast) {
-    if (error) {
-      // Trouble accessing the file.
-      return fs.appendFile('helloworld.log', 'File is NOT ok');
-    } else {
-      // Do something
-      return fs.appendFile('helloworld.log', 'File is ok');
-    }
+    // Do something
   });
 ```
+
+## Handle GET, POST and upload
+
+When you are requesting a node script, you can retrieve the GET and POST parameters of the HTTP request. You can also access the request and response object for additional informations and actions.
+
+If you want the script to work, you should place it in the WWW directory in a file with a .xjs extension and request the correct URL. For a file "test.xjs" directly in WWW directory with the default server running on port 80, the request URL would be "http://localhost:80/test.xjs".
+
+GET and POST parameters are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
+
+When you send a file with a POST request, the file is uploaded in the server. The location is in the temporary files directory of the operating system. An object containing the Meta data of the file is set in the parameters object.
+
+**Example of the basic structure:**
+```
+  module.exports = function(request, response, parameters, ws) {
+    // request: HTTP request by client
+    // response: HTTP response of server
+    // parameters: GET and POST parameters
+    // ws: web-servo object
+
+    return 'Ok';
+  };
+
+```
+
+**Example of a script that returns the parameters list:**
+```
+  module.exports = function(request, response, parameters, ws) {
+    var str = '';
+    for (var name in parameters) {
+      str += '<p>' + name + ' = ' + parameters[name] + '</p>';
+    }
+    return '<html><body>' + str + '</body></html>';
+  };
+``` 
+
+**Example of a file upload:**
+```
+  module.exports = function(request, response, parameters, ws) {
+    var str = '';
+
+    // if the file is uploaded
+    if (parameters.myText) {
+      // show the file data
+      str += '<p>File uploaded successfully!</p>'
+        +'<p>'
+        +'<li>Mime type: '+parameters.myText.mimetype+'</li>'
+        +'<li>Encoding: '+parameters.myText.encoding+'</li>'
+        +'<li>Remote file name: '+parameters.myText.filename+'</li>'
+        +'<li>Temporary file: '+parameters.myText.tmpFile+'</li>'
+        +'</p>';
+    }
+    
+    // A simple form to send the file
+    str += '<html>'
+      +'  <body>'
+      +'    <form method="POST" enctype="multipart/form-data">'
+      +'      <input type="file" name="myText" /><input type="submit"/>'
+      +'    </form>'
+      +'  </body>'
+      +'</html>';
+
+    return str;
+  };
+``` 
+
 
 ## Methods
 
 ### setDir(dir)
-Set the dir of the server, before calling config() or start(). The 
+Set the dir of the server, before calling config() or start()
 **dir**: {string} directory of the server, relative to working directory or absolute
 
 Example: 
@@ -289,14 +344,17 @@ Create a simple "index.html" file and put it in "myProject/www/":
 
 Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
-
-
 ## Changelog
 
-**version 0.2.1**
+**version 0.3**
 - Get additional informations about the uploaded files
 - Fix error function when there is no log directory
 - Tutorial to set up a server from scratch
+- Fix log access when requesting a file
+- Example script, GET POST data and upload files
+- Fix error in script when header not set
+- Fix file upload
+- Dont try to upload file when filename is empty
 
 **Version 0.2**
 - Set server config from script
@@ -312,13 +370,13 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 
 ## TODO
 
-- Tutorial to script, get POST data and uploaded files
 - Tutorial for multiple servers
 - Password protected directory
 - URL aliases
-- Build an API REST
 - Timeout for a page / script
-- Event system
+- Build an API REST
+- setup function to automatically build a server
 - Launch from command line (port, dir ...)
+- Event system
 - Cache system
 - Run multiple types of script (PHP)
