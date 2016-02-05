@@ -1,17 +1,17 @@
 
 # web-servo
 
-A simple HTTP web server executing node JS scripts.
+A HTTP web server fully configurable executing node JS scripts.
 
-The server can return normal HTTP files (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
+The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
 
 ## Features
 - Easy to use, launch with one line of code
 - Configuration in a JSON file
 - Log management of errors and access
 - Working example
-- Executing node javascript file on the server and output result
-- Debug log to fix your node script file
+- Executing node script on the server and output result
+- Debug log to fix your node script
 - Descriptive log in the console
 
 ## Install
@@ -38,15 +38,14 @@ Launch the server with one line of script:
 Change server directory:
 ``` 
   var ws = require('web-servo');
-  ws.setDir('../somedir/');
-  ws.start();
+  ws.setDir('../somedir/').start();
 ``` 
 
 **For normal HTTP files:**
-When a client request a file, the server will return the content of the file to the client, if the extension does not match with the script file extension (by default .xjs). The returned mime type depends on the file extension.
+When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the script file extension (by default .xjs). The returned mime type depends on the file extension.
 
-**For node script file:**
-When the client request a file with the script extension (by default .xjs), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
+**For node script:**
+When the client request an URL with the script extension (by default .xjs), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
 
 **For unknown files:**
 If file is not here, server will return the 404 error page.
@@ -59,11 +58,6 @@ Example XJS script that returns HTML:
 
   // to return HTML, we use module.exports
   module.exports = function(request, response, parameters, ws) {
-    // request: HTTP request by client
-    // response: HTTP response of server
-    // parameters: GET and POST parameters
-    // ws: web-servo object
-
     // Do something here, read some files ..
     // Then return the HTML
     return '<html><body>This is it!</body></html>';
@@ -76,22 +70,82 @@ Simple XJS script:
   // We don't use module.exports so we can't return anything
   // We also don't know anything about the request (parameters, type ...)
 
-  // Here, you can user any istalled modules
+  // Here, you can use any installed modules
+  var fs = require('fs');
   fs.stat('/helloWorld.html', function (error, stast) {
-    if (error) {
-      // Trouble accessing the file.
-      return fs.appendFile('helloworld.log', 'File is NOT ok');
-    } else {
-      // Do something
-      return fs.appendFile('helloworld.log', 'File is ok');
-    }
+    // Do something
   });
 ```
+
+## Handle GET, POST and upload
+
+When you are requesting a node script, you can retrieve the GET and POST parameters of the HTTP request. You can also access the request and response object for additional informations and actions.
+
+If you want the script to work, you should place it in the WWW directory in a file with a .xjs extension and request the correct URL. For a file "test.xjs" directly in WWW directory with the default server running on port 80, the request URL would be "http://localhost:80/test.xjs".
+
+GET and POST parameters are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
+
+When you send a file with a POST request, the file is uploaded in the server. The location is in the temporary files directory of the operating system. An object containing the Meta data of the file is set in the parameters object.
+
+**Example of the basic structure:**
+```
+  module.exports = function(request, response, parameters, ws) {
+    // request: HTTP request by client
+    // response: HTTP response of server
+    // parameters: GET and POST parameters
+    // ws: web-servo object
+
+    return 'Ok';
+  };
+
+```
+
+**Example of a script that returns the parameters list:**
+```
+  module.exports = function(request, response, parameters, ws) {
+    var str = '';
+    for (var name in parameters) {
+      str += '<p>' + name + ' = ' + parameters[name] + '</p>';
+    }
+    return '<html><body>' + str + '</body></html>';
+  };
+``` 
+
+**Example of a file upload:**
+```
+  module.exports = function(request, response, parameters, ws) {
+    var str = '';
+
+    // if the file is uploaded
+    if (parameters.myText) {
+      // show the file data
+      str += '<p>File uploaded successfully!</p>'
+        +'<p>'
+        +'<li>Mime type: '+parameters.myText.mimetype+'</li>'
+        +'<li>Encoding: '+parameters.myText.encoding+'</li>'
+        +'<li>Remote file name: '+parameters.myText.filename+'</li>'
+        +'<li>Temporary file: '+parameters.myText.tmpFile+'</li>'
+        +'</p>';
+    }
+    
+    // A simple form to send the file
+    str += '<html>'
+      +'  <body>'
+      +'    <form method="POST" enctype="multipart/form-data">'
+      +'      <input type="file" name="myText" /><input type="submit"/>'
+      +'    </form>'
+      +'  </body>'
+      +'</html>';
+
+    return str;
+  };
+``` 
+
 
 ## Methods
 
 ### setDir(dir)
-Set the dir of the server before config() or start().
+Set the dir of the server, before calling config() or start()
 **dir**: {string} directory of the server, relative to working directory or absolute
 
 Example: 
@@ -211,9 +265,96 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/script.xjs  <-- script executed on the server, returns HTML
 - http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
 - http://localhost:80/error.xjs   <-- Error and debug log on console
-- http://localhost:80/json.xjs    <-- change the header response to content type "application/json"
+- http://localhost:80/json.xjs    <-- change the content type header response to "application/json"
+- http://localhost:80/get.xjs     <-- GET request example
+- http://localhost:80/post.xjs    <-- POST request example
+- http://localhost:80/upload.xjs  <-- file upload example
+
+## Tutorial
+
+### Make a server from scratch
+
+Assuming you start from nothing, install Node (https://nodejs.org/en/download/) and open a console. Then create a directory for your project and install the web-servo module:
+```
+  mkdir myProject
+  cd myProject
+  npm install web-servo
+```
+
+Create the script "server.js" to launch the server in "myProject/":
+```
+  require('web-servo').start();
+```
+If you run the server now, it will show an error because the configuration is not set in the script and the server is supposed to use the file "config.json" that doesn't exist yet. It is also recommanded to create the WWW root directory and log directory so everything works fine.
+```
+  mkdir www
+  mkdir log
+```
+Now create "config.json" in "myProject/":
+```
+{
+  "server": {
+    "port": "9000",
+    "dir": "www/"
+  },
+  "log": {
+    "access": {
+      "enabled": true,
+      "path": "log/access.log",
+      "console": true
+    },
+    "error": {
+      "enabled": true,
+      "path": "log/error.log",
+      "console": true,
+      "debug": true
+    }
+  }
+}
+```
+In this file, we defined the server to run on port 9000 and the WWW directory to "www/". I also add the log parameters to show access and errors in the console.
+If you omit a parameter in this file, it will take the default value. For example, the default page is set by default to "index.html".
+
+Now launch the server and it should run properly:
+```
+  node server.js
+```
+
+The console will output:
+```
+  Using config file "C:\Users\PR033\git\myProject\config.json"
+  Cannot write in error log file "C:\Users\PR033\git\myProject\log\error.log"
+  Cannot write in access log file "C:\Users\PR033\git\myProject\log\access.log"
+  Using WWW directory "C:\Users\PR033\git\myProject\www"
+  Server listening on: http://localhost:9000
+```
+
+Create a simple "index.html" file and put it in "myProject/www/":
+```
+  <!doctype html>
+  <html>
+    <head>
+      <title>Hello world!</title>
+    </head>
+    <body>
+      This is the Hello world page!
+    </body>
+  </html>
+```
+
+Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
 ## Changelog
+
+**version 0.3**
+- Get additional informations about the uploaded files
+- Fix error function when there is no log directory
+- Tutorial to set up a server from scratch
+- Fix log access when requesting a file
+- Example script, GET POST data and upload files
+- Fix error in script when header not set
+- Fix file upload
+- Dont try to upload file when filename is empty
 
 **Version 0.2**
 - Set server config from script
@@ -229,15 +370,13 @@ The server is started. Open your browser and go to these locations:
 
 ## TODO
 
-- Get additional informations about the uploaded files
-- Tutorial to set up a server from scratch
-- Tutorial to script, get POST data and uploaded files
 - Tutorial for multiple servers
 - Password protected directory
 - URL aliases
-- Build an API REST
 - Timeout for a page / script
-- Event system
+- Build an API REST
+- setup function to automatically build a server
 - Launch from command line (port, dir ...)
+- Event system
 - Cache system
 - Run multiple types of script (PHP)

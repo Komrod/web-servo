@@ -1,7 +1,7 @@
 {
   "name": "web-servo",
-  "version": "0.2.0",
-  "description": "A Node JS web server that can execute node JS scripts",
+  "version": "0.3.0",
+  "description": "Node HTTP web server that can execute node JS scripts",
   "author": "Komrod <komrod@hotmail.com>",
   "main": "./lib/web-servo",
   "repository": {
