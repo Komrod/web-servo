@@ -146,7 +146,7 @@ When you send a file with a POST request, the file is uploaded in the server. Th
 
 ### setDir(dir)
 Set the dir of the server, before calling config() or start()
-**dir**: {string} directory of the server, relative to working directory or absolute
+- **dir**: {string} directory of the server, relative to working directory or absolute
 
 Example: 
 ``` 
@@ -155,7 +155,7 @@ Example:
 
 ### config(file)
 Set the config for the server. Parameter can be a path to a config file or a config object. If parameter is omited, load the default file "config.json" in the server directory. If parameter is an object, consider it as the loaded config.
-**file**: {mixed} path to the file or object
+- **file**: {mixed} path to the file or object
 
 Example: 
 ``` 
@@ -167,14 +167,14 @@ Example:
 ``` 
 
 ### setConfigVar(name, value)
-Set a configuration variable for the server.
-**name**: {string} name of the variable as in config file with dots "." if the variable is in an object
-**value**: {mixed} value
+Set a configuration variable for the server. You cannot change a variable while the server is running.
+- **name**: {string} name of the variable as in config file with dots "." if the variable is in an object
+- **value**: {mixed} value
 
 Example: 
 ``` 
   // Change config to show access in console
-  .setConfigVar('log.access.console', true)
+  ws.setConfigVar('log.access.console', true)
 ``` 
 
 ### start(callback)
@@ -195,7 +195,7 @@ Example:
 
 ### silent(b)
 Set the silent mode on or off, no console output.
-**b**: {bool} if true, set the silent mode on, default true
+- **b**: {bool} if true, set the silent mode on, default true
 
 Example: 
 ```
@@ -230,6 +230,17 @@ The configuration file "config.json" must be located in the server directory. Th
       "401": "page/401.html",     <-- full path of the 401 error page
       "404": "page/404.html",     <-- full path of the 404 error page
       "500": "page/500.html"      <-- full path of the 500 error page
+    }
+  },
+  "url": {
+    "/not-here.html": {           <-- alias from URL
+      "alias": "test.html"        <-- to this URL
+    },
+    "/alias-recursion-1.html": {  <-- create an infinite alias recursion
+      "alias": "alias-recursion-2.html"
+    },
+    "/alias-recursion-2.html": {
+      "alias": "alias-recursion-1.html"
     }
   },
   "log": {
@@ -269,6 +280,8 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/get.xjs     <-- GET request example
 - http://localhost:80/post.xjs    <-- POST request example
 - http://localhost:80/upload.xjs  <-- file upload example
+- http://localhost:80/not-here.html <-- alias
+- http://localhost:80/alias-recursion-1.html <-- alias recursion error
 
 ## Tutorial
 
@@ -322,10 +335,8 @@ Now launch the server and it should run properly:
 
 The console will output:
 ```
-  Using config file "C:\Users\PR033\git\myProject\config.json"
-  Cannot write in error log file "C:\Users\PR033\git\myProject\log\error.log"
-  Cannot write in access log file "C:\Users\PR033\git\myProject\log\access.log"
-  Using WWW directory "C:\Users\PR033\git\myProject\www"
+  Using config file "C:\Users\me\git\myProject\config.json"
+  Using WWW directory "C:\Users\me\git\myProject\www"
   Server listening on: http://localhost:9000
 ```
 
@@ -345,6 +356,12 @@ Create a simple "index.html" file and put it in "myProject/www/":
 Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
 ## Changelog
+
+**version 0.3.1**
+- Dont change config while server is running
+- URL alias
+- Fix error page directory
+- Error on reaching max of alias recursion
 
 **version 0.3**
 - Get additional informations about the uploaded files
@@ -369,14 +386,14 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 - Chainable functions
 
 ## TODO
-
-- Tutorial for multiple servers
 - Password protected directory
-- URL aliases
+- Crypt method for password in config.json
+- Function to add and remove alias
+- Function to add and remove password protected directory
+- Event system
 - Timeout for a page / script
 - Build an API REST
 - setup function to automatically build a server
 - Launch from command line (port, dir ...)
-- Event system
 - Cache system
 - Run multiple types of script (PHP)
