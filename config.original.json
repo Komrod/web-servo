@@ -7,9 +7,20 @@
     "default": "index.html",
     "script": "xjs",
     "error": {
-      "400": "page/400.html",
       "401": "page/401.html",
+      "404": "page/404.html",
       "500": "page/500.html"
+    }
+  },
+  "url": {
+    "/not-here.html": {
+      "alias": "test.html"
+    },
+    "/alias-recursion-1.html": {
+      "alias": "alias-recursion-2.html"
+    },
+    "/alias-recursion-2.html": {
+      "alias": "alias-recursion-1.html"
     }
   },
   "log": {

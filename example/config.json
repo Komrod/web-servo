@@ -12,6 +12,17 @@
       "500": "page/500.html"
     }
   },
+  "url": {
+    "/not-here.html": {
+      "alias": "test.html"
+    },
+    "/alias-recursion-1.html": {
+      "alias": "alias-recursion-2.html"
+    },
+    "/alias-recursion-2.html": {
+      "alias": "alias-recursion-1.html"
+    }
+  },
   "log": {
     "access": {
       "enabled": true,
