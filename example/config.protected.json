@@ -13,14 +13,24 @@
     }
   },
   "url": {
-    "/not-here.html": {
+    "not-here.html": {
       "alias": "test.html"
     },
-    "/alias-recursion-1.html": {
-      "alias": "alias-recursion-2.html"
+    "protected/": {
+      "authentication": {
+        "login": "admin",
+        "password": "fdf5b60206183b57cd6f688ffe998396",
+        "password-type": "hex",
+        "crypt": "aes",
+        "crypt-bit": "128",
+        "crypt-key": "kilimandjaro"
+      }
     },
-    "/alias-recursion-2.html": {
-      "alias": "alias-recursion-1.html"
+    "protected-file.html": {
+      "authentication": {
+        "login": "admin",
+        "password": "secure"
+      }
     }
   },
   "log": {
