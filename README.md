@@ -5,18 +5,6 @@ A HTTP web server fully configurable executing node JS scripts.
 
 The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
 
-## Table of contents
-
-- [Features](web-servo#features)
-- [Install](web-servo#install)
-- [How to use](web-servo#how-to-use)
-- [Handle GET, POST and upload](web-servo#handle-get-post-and-upload)
-- [Methods](web-servo#methods)
-- [Configuration file](web-servo#configuration-file)
-- [Example](web-servo#example)
-- [Tutorial](web-servo#tutorial)
-- [Changelog](web-servo#changelog)
-
 ## Features
 
 - Easy to use, launch with one line of code
