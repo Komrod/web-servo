@@ -5,18 +5,6 @@ A HTTP web server fully configurable executing node JS scripts.
 
 The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
 
-## Table of contents
-
-- [Features](web-servo#features)
-- [Install](web-servo#install)
-- [How to use](web-servo#how-to-use)
-- [Handle GET, POST and upload](web-servo#handle-get-post-and-upload)
-- [Methods](web-servo#methods)
-- [Configuration file](web-servo#configuration-file)
-- [Example](web-servo#example)
-- [Tutorial](web-servo#tutorial)
-- [Changelog](web-servo#changelog)
-
 ## Features
 
 - Easy to use, launch with one line of code
@@ -374,6 +362,9 @@ Create a simple "index.html" file and put it in "myProject/www/":
 Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
 ## Changelog
+
+**version 0.3.3**
+- Remove table of contents in readme
 
 **version 0.3.2**
 - Fix error 500 page when error 404 is in cache
