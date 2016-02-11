@@ -21,6 +21,9 @@
     },
     "/alias-recursion-2.html": {
       "alias": "alias-recursion-1.html"
+    },
+    "/first/*": {
+      "alias": "/second/*"
     }
   },
   "log": {
