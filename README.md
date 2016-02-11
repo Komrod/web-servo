@@ -7,15 +7,15 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 
 ## Table of contents
 
-- [Features](#features)
-- [Install](#install)
-- [How to use](#how-to-use)
-- [Handle GET, POST and upload](#handle-get-post-and-upload)
-- [Methods](#methods)
-- [Configuration file](#configuration-file)
-- [Example](#example)
-- [Tutorial](#tutorial)
-- [Changelog](#changelog)
+- [Features](web-servo#features)
+- [Install](web-servo#install)
+- [How to use](web-servo#how-to-use)
+- [Handle GET, POST and upload](web-servo#handle-get-post-and-upload)
+- [Methods](web-servo#methods)
+- [Configuration file](web-servo#configuration-file)
+- [Example](web-servo#example)
+- [Tutorial](web-servo#tutorial)
+- [Changelog](web-servo#changelog)
 
 ## Features
 
@@ -255,6 +255,9 @@ The configuration file "config.json" must be located in the server directory. Th
     },
     "/alias-recursion-2.html": {  <-- create an infinite alias recursion
       "alias": "alias-recursion-1.html"
+    },
+    "/first/*": {                 <-- make the directory /first/
+      "alias": "/second/*"        <-- an alias of /second/
     }
   },
   "log": {
@@ -295,6 +298,7 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/post.xjs    <-- POST request example
 - http://localhost:80/upload.xjs  <-- file upload example
 - http://localhost:80/not-here.html <-- alias to test.html
+- http://localhost:80/first/page.html <-- directory alias /first/ to /second/
 - http://localhost:80/alias-recursion-1.html <-- alias recursion error
 
 ## Tutorial
@@ -373,6 +377,7 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 
 **version 0.3.2**
 - Fix error 500 page when error 404 is in cache
+- directory alias, search term with "*" in url
 
 **version 0.3.1**
 - Dont change config while server is running
