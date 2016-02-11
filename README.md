@@ -363,6 +363,9 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 
 ## Changelog
 
+**version 0.3.3**
+- Remove table of contents in readme
+
 **version 0.3.2**
 - Fix error 500 page when error 404 is in cache
 - directory alias, search term with "*" in url
