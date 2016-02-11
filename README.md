@@ -5,13 +5,28 @@ A HTTP web server fully configurable executing node JS scripts.
 
 The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
 
+## Table of contents
+
+- [Features](web-servo#features)
+- [Install](web-servo#install)
+- [How to use](web-servo#how-to-use)
+- [Handle GET, POST and upload](web-servo#handle-get-post-and-upload)
+- [Methods](web-servo#methods)
+- [Configuration file](web-servo#configuration-file)
+- [Example](web-servo#example)
+- [Tutorial](web-servo#tutorial)
+- [Changelog](web-servo#changelog)
+
 ## Features
+
 - Easy to use, launch with one line of code
+- Handle GET, POST and file upload
 - Configuration in a JSON file
 - Log management of errors and access
 - Working example
 - Executing node script on the server and output result
 - Debug log to fix your node script
+- URL alias
 - Descriptive log in the console
 
 ## Install
@@ -141,7 +156,6 @@ When you send a file with a POST request, the file is uploaded in the server. Th
   };
 ``` 
 
-
 ## Methods
 
 ### setDir(dir)
@@ -233,14 +247,17 @@ The configuration file "config.json" must be located in the server directory. Th
     }
   },
   "url": {
-    "/not-here.html": {           <-- alias from URL
+    "/not-here.html": {           <-- alias from this URL
       "alias": "test.html"        <-- to this URL
     },
     "/alias-recursion-1.html": {  <-- create an infinite alias recursion
       "alias": "alias-recursion-2.html"
     },
-    "/alias-recursion-2.html": {
+    "/alias-recursion-2.html": {  <-- create an infinite alias recursion
       "alias": "alias-recursion-1.html"
+    },
+    "/first/*": {                 <-- make the directory /first/
+      "alias": "/second/*"        <-- an alias of /second/
     }
   },
   "log": {
@@ -280,7 +297,8 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/get.xjs     <-- GET request example
 - http://localhost:80/post.xjs    <-- POST request example
 - http://localhost:80/upload.xjs  <-- file upload example
-- http://localhost:80/not-here.html <-- alias
+- http://localhost:80/not-here.html <-- alias to test.html
+- http://localhost:80/first/page.html <-- directory alias /first/ to /second/
 - http://localhost:80/alias-recursion-1.html <-- alias recursion error
 
 ## Tutorial
@@ -356,6 +374,10 @@ Create a simple "index.html" file and put it in "myProject/www/":
 Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
 ## Changelog
+
+**version 0.3.2**
+- Fix error 500 page when error 404 is in cache
+- directory alias, search term with "*" in url
 
 **version 0.3.1**
 - Dont change config while server is running
