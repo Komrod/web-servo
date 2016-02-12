@@ -24,6 +24,22 @@
     },
     "/first/*": {
       "alias": "/second/*"
+    },
+    "/protected/*": {
+      "authentication": {
+        "login": "admin",
+        "password": "fdf5b60206183b57cd6f688ffe998396",
+        "password-type": "hex",
+        "crypt": "aes",
+        "crypt-bit": "128",
+        "crypt-key": "kilimandjaro"
+      }
+    },
+    "/protected-file.html": {
+      "authentication": {
+        "login": "admin",
+        "password": "secure"
+      }
     }
   },
   "log": {
