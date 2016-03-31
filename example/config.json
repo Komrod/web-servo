@@ -28,11 +28,7 @@
     "/protected/*": {
       "authentication": {
         "login": "admin",
-        "password": "fdf5b60206183b57cd6f688ffe998396",
-        "password-type": "hex",
-        "crypt": "aes",
-        "crypt-bit": "128",
-        "crypt-key": "kilimandjaro"
+        "password": "123456789"
       }
     },
     "/protected-file.html": {
