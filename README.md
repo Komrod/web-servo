@@ -363,6 +363,10 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 
 ## Changelog
 
+**version 0.4**
+- Password protected directory and file (basic authentication)
+- Event system (onBeforeRequest, onAfterRequest)
+
 **version 0.3.3**
 - Remove table of contents in readme
 
@@ -399,11 +403,12 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 - Chainable functions
 
 ## TODO
-- Password protected directory
-- Crypt method for password in config.json
+- Block remote IP
+- Block mime type
+- Block url
 - Function to add and remove alias
 - Function to add and remove password protected directory
-- Event system
+- separate tutorials and doc from readme
 - Timeout for a page / script
 - Build an API REST
 - setup function to automatically build a server

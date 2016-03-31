@@ -24,6 +24,18 @@
     },
     "/first/*": {
       "alias": "/second/*"
+    },
+    "/protected/*": {
+      "authentication": {
+        "login": "admin",
+        "password": "123456789"
+      }
+    },
+    "/protected-file.html": {
+      "authentication": {
+        "login": "admin",
+        "password": "secure"
+      }
     }
   },
   "log": {
