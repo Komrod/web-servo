@@ -294,7 +294,7 @@ The server is started. Open your browser and go to these locations:
 
 ## Tutorial
 
-[You can access the tutorial here!](docs/more_words.md)
+[You can access the tutorial here!]((https://github.com/Komrod/web-servo/tutorials.md)
 
 List of the tutorials:
 - Make a server from scratch
@@ -302,6 +302,11 @@ List of the tutorials:
 
 
 ## Changelog
+
+**version 0.5**
+- Support HTTP 403 error
+- Allow and disallow HTTP methods
+- Automatic OPTIONS response
 
 **version 0.4**
 - Password protected directory and file (basic authentication)
