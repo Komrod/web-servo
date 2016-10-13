@@ -39,9 +39,8 @@
     }
   },
   "methods": {
-    "allowed": ["OPTIONS", "GET", "POST", "HEAD", "PUT", "DELETE", "TRACE", "CONNECT"],
-    "options": {
-      "auto_response": true,
+    "allowed": ["OPTIONS", "GET", "POST", "HEAD", "PUT", "PATCH", "DELETE", "COPY", "LINK", "UNLINK", "TRACE", "CONNECT"],
+    "OPTIONS": {
       "headers": {
         "test": "ok"
       }
