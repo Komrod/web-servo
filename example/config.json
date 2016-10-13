@@ -38,6 +38,15 @@
       }
     }
   },
+  "methods": {
+    "allowed": ["OPTIONS", "GET", "POST", "HEAD", "PUT", "DELETE", "TRACE", "CONNECT"],
+    "options": {
+      "auto_response": true,
+      "headers": {
+        "test": "ok"
+      }
+    }
+  },
   "log": {
     "access": {
       "enabled": true,
