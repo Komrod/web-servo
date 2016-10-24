@@ -12,6 +12,7 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 - Configuration in a JSON file
 - Log management of errors and access
 - Working example
+- [Tutorials]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 - Executing node script on the server and output result
 - Debug log to fix your node script
 - URL alias
@@ -19,6 +20,7 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 - onBeforeRequest and onAfterRequest events
 - Error pages customization
 - Descriptive log in the console
+
 
 ## Install
 
@@ -251,6 +253,10 @@ The configuration file "config.json" must be located in the server directory. Th
       "alias": "/second/*"        <-- an alias of /second/
     }
   },
+  "methods": {
+    "allowed": ["OPTIONS", "GET", "POST", "HEAD", "PUT", "PATCH", "DELETE", "COPY", "LINK", "UNLINK", "TRACE", "CONNECT"] <-- allowed HTTP methods
+    }
+  },
   "log": {
     "access": {
       "enabled": true,            <-- if access log is enabled
@@ -292,21 +298,22 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/first/page.html <-- directory alias /first/ to /second/
 - http://localhost:80/alias-recursion-1.html <-- alias recursion error
 
-## Tutorial
 
-[You can access the tutorial here!]((https://github.com/Komrod/web-servo/tutorials.md)
+## Tutorials
+
+[You can access the tutorials here!]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 
 List of the tutorials:
 - Make a server from scratch
 
 
-
 ## Changelog
 
-**version 0.5**
+**version 0.4.1**
 - Support HTTP 403 error
 - Allow and disallow HTTP methods
 - Automatic OPTIONS response
+- Separate tutorials
 
 **version 0.4**
 - Password protected directory and file (basic authentication)
@@ -348,6 +355,7 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
+- Automatically adding headers to requests
 - Block remote IP
 - Block mime type
 - Block url
