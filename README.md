@@ -235,6 +235,7 @@ The configuration file "config.json" must be located in the server directory. Th
     "default": "index.html",      <-- default page if none
     "error": {
       "401": "page/401.html",     <-- full path of the 401 error page
+      "403": "page/403.html",     <-- full path of the 403 error page
       "404": "page/404.html",     <-- full path of the 404 error page
       "500": "page/500.html"      <-- full path of the 500 error page
     }
