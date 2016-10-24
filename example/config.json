@@ -38,6 +38,14 @@
       }
     }
   },
+  "methods": {
+    "allowed": ["OPTIONS", "GET", "POST", "HEAD", "PUT", "PATCH", "DELETE", "COPY", "LINK", "UNLINK", "TRACE", "CONNECT"],
+    "OPTIONS": {
+      "headers": {
+        "test": "ok"
+      }
+    }
+  },
   "log": {
     "access": {
       "enabled": true,

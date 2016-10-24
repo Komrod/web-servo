@@ -12,10 +12,15 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 - Configuration in a JSON file
 - Log management of errors and access
 - Working example
+- [Tutorials]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 - Executing node script on the server and output result
 - Debug log to fix your node script
 - URL alias
+- Password protection
+- onBeforeRequest and onAfterRequest events
+- Error pages customization
 - Descriptive log in the console
+
 
 ## Install
 
@@ -230,6 +235,7 @@ The configuration file "config.json" must be located in the server directory. Th
     "default": "index.html",      <-- default page if none
     "error": {
       "401": "page/401.html",     <-- full path of the 401 error page
+      "403": "page/403.html",     <-- full path of the 403 error page
       "404": "page/404.html",     <-- full path of the 404 error page
       "500": "page/500.html"      <-- full path of the 500 error page
     }
@@ -246,6 +252,10 @@ The configuration file "config.json" must be located in the server directory. Th
     },
     "/first/*": {                 <-- make the directory /first/
       "alias": "/second/*"        <-- an alias of /second/
+    }
+  },
+  "methods": {
+    "allowed": ["OPTIONS", "GET", "POST", "HEAD", "PUT", "PATCH", "DELETE", "COPY", "LINK", "UNLINK", "TRACE", "CONNECT"] <-- allowed HTTP methods
     }
   },
   "log": {
@@ -289,79 +299,22 @@ The server is started. Open your browser and go to these locations:
 - http://localhost:80/first/page.html <-- directory alias /first/ to /second/
 - http://localhost:80/alias-recursion-1.html <-- alias recursion error
 
-## Tutorial
 
-### Make a server from scratch
+## Tutorials
 
-Assuming you start from nothing, install Node (https://nodejs.org/en/download/) and open a console. Then create a directory for your project and install the web-servo module:
-```
-  mkdir myProject
-  cd myProject
-  npm install web-servo
-```
+[You can access the tutorials here!]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 
-Create the script "server.js" to launch the server in "myProject/":
-```
-  require('web-servo').start();
-```
-If you run the server now, it will show an error because the configuration is not set in the script and the server is supposed to use the file "config.json" that doesn't exist yet. It is also recommanded to create the WWW root directory and log directory so everything works fine.
-```
-  mkdir www
-  mkdir log
-```
-Now create "config.json" in "myProject/":
-```
-{
-  "server": {
-    "port": "9000",
-    "dir": "www/"
-  },
-  "log": {
-    "access": {
-      "enabled": true,
-      "path": "log/access.log",
-      "console": true
-    },
-    "error": {
-      "enabled": true,
-      "path": "log/error.log",
-      "console": true,
-      "debug": true
-    }
-  }
-}
-```
-In this file, we defined the server to run on port 9000 and the WWW directory to "www/". I also add the log parameters to show access and errors in the console.
-If you omit a parameter in this file, it will take the default value. For example, the default page is set by default to "index.html".
+List of the tutorials:
+- Make a server from scratch
 
-Now launch the server and it should run properly:
-```
-  node server.js
-```
-
-The console will output:
-```
-  Using config file "C:\Users\me\git\myProject\config.json"
-  Using WWW directory "C:\Users\me\git\myProject\www"
-  Server listening on: http://localhost:9000
-```
-
-Create a simple "index.html" file and put it in "myProject/www/":
-```
-  <!doctype html>
-  <html>
-    <head>
-      <title>Hello world!</title>
-    </head>
-    <body>
-      This is the Hello world page!
-    </body>
-  </html>
-```
-
-Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
 ## Changelog
+
+**version 0.4.1**
+- Support HTTP 403 error
+- Allow and disallow HTTP methods
+- Automatic OPTIONS response
+- Separate tutorials
 
 **version 0.4**
 - Password protected directory and file (basic authentication)
@@ -403,6 +356,7 @@ Now open a browser and request http://localhost:9000/ you should see the Hello w
 - Chainable functions
 
 ## TODO
+- Automatically adding headers to requests
 - Block remote IP
 - Block mime type
 - Block url
