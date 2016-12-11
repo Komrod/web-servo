@@ -12,7 +12,7 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 - Configuration in a JSON file
 - Log management of errors and access
 - Working example
-- [Tutorials]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
+- [Tutorials](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 - Executing node script on the server and output result
 - Debug log to fix your node script
 - URL alias
@@ -38,7 +38,7 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 
 ## How to use
 
-Launch the server with one line of script:
+Launch the server with one line of script in your javascript file:
 ``` 
   require('web-servo').start();
 ``` 
@@ -49,17 +49,17 @@ Change server directory:
   ws.setDir('../somedir/').start();
 ``` 
 
-**For normal HTTP files:**
-When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the script file extension (by default .xjs). The returned mime type depends on the file extension.
+**For regular HTTP files:**
+When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the node script file extension (by default .xjs). The returned mime type depends on the file extension.
 
-**For node script:**
+**For node JS script:**
 When the client request an URL with the script extension (by default .xjs), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
 
-**For unknown files:**
+**For non existing files:**
 If file is not here, server will return the 404 error page.
 
 
-Example XJS script that returns HTML:
+Example of node JS script that returns HTML:
 ```
   // As this script runs in the server, this will show in the console
   console.log('test');
@@ -73,7 +73,7 @@ Example XJS script that returns HTML:
 
 ```
 
-Simple XJS script:
+Simple node JS script that returns nothing:
 ```
   // We don't use module.exports so we can't return anything
   // We also don't know anything about the request (parameters, type ...)
@@ -302,7 +302,7 @@ The server is started. Open your browser and go to these locations:
 
 ## Tutorials
 
-[You can access the tutorials here!]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
+[You can access the tutorials here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 
 List of the tutorials:
 - Make a server from scratch
@@ -356,6 +356,8 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
+- rename .xjs extension to .node.js
+- HTTPS
 - Automatically adding headers to requests
 - Block remote IP
 - Block mime type
