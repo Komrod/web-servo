@@ -5,7 +5,7 @@
   },
   "page": {
     "default": "index.html",
-    "script": "xjs",
+    "script": "node.js",
     "error": {
       "401": "page/401.html",
       "404": "page/404.html",

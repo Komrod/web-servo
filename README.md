@@ -3,7 +3,7 @@
 
 A HTTP web server fully configurable executing node JS scripts.
 
-The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
+The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .node.js files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
 
 ## Features
 
@@ -50,10 +50,10 @@ Change server directory:
 ``` 
 
 **For regular HTTP files:**
-When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the node script file extension (by default .xjs). The returned mime type depends on the file extension.
+When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the node script file extension (by default .node.js). The returned mime type depends on the file extension.
 
 **For node JS script:**
-When the client request an URL with the script extension (by default .xjs), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
+When the client request an URL with the script extension (by default .node.js), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
 
 **For non existing files:**
 If file is not here, server will return the 404 error page.
@@ -89,7 +89,7 @@ Simple node JS script that returns nothing:
 
 When you are requesting a node script, you can retrieve the GET and POST parameters of the HTTP request. You can also access the request and response object for additional informations and actions.
 
-If you want the script to work, you should place it in the WWW directory in a file with a .xjs extension and request the correct URL. For a file "test.xjs" directly in WWW directory with the default server running on port 80, the request URL would be "http://localhost:80/test.xjs".
+If you want the script to work, you should place it in the WWW directory in a file with a .node.js extension and request the correct URL. For a file "test.node.js" directly in WWW directory with the default server running on port 80, the request URL would be "http://localhost:80/test.node.js".
 
 GET and POST parameters are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
 
@@ -231,7 +231,7 @@ The configuration file "config.json" must be located in the server directory. Th
     "dir": "www/"                 <-- directory of the www root (from server dir)
   },
   "page": {
-    "script": "xjs",              <-- extension of the JS to execute server side
+    "script": "node.js",          <-- extension of the JS to execute server side
     "default": "index.html",      <-- default page if none
     "error": {
       "401": "page/401.html",     <-- full path of the 401 error page
@@ -285,19 +285,19 @@ Execute the example server :
 ```
 
 The server is started. Open your browser and go to these locations:
-- http://localhost:80/            <-- index page (default page is index.html)
-- http://localhost:80/index.html  <-- index page directly
-- http://localhost:80/404.html    <-- Page not found
-- http://localhost:80/script.xjs  <-- script executed on the server, returns HTML
-- http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
-- http://localhost:80/error.xjs   <-- Error and debug log on console
-- http://localhost:80/json.xjs    <-- change the content type header response to "application/json"
-- http://localhost:80/get.xjs     <-- GET request example
-- http://localhost:80/post.xjs    <-- POST request example
-- http://localhost:80/upload.xjs  <-- file upload example
-- http://localhost:80/not-here.html <-- alias to test.html
+- http://localhost:80/                <-- index page (default page is index.html)
+- http://localhost:80/index.html      <-- index page directly
+- http://localhost:80/404.html        <-- Page not found
+- http://localhost:80/script.node.js  <-- script executed on the server, returns HTML
+- http://localhost:80/simple.node.js  <-- simple script executed on the server, returns nothing
+- http://localhost:80/error.node.js   <-- Error and debug log on console
+- http://localhost:80/json.node.js    <-- change the content type header response to "application/json"
+- http://localhost:80/get.node.js     <-- GET request example
+- http://localhost:80/post.node.js    <-- POST request example
+- http://localhost:80/upload.node.js  <-- file upload example
+- http://localhost:80/not-here.html   <-- alias to test.html
 - http://localhost:80/first/page.html <-- directory alias /first/ to /second/
-- http://localhost:80/alias-recursion-1.html <-- alias recursion error
+- http://localhost:80/alias-recursion-1.html <-- infinite alias recursion error
 
 
 ## Tutorials
@@ -309,6 +309,9 @@ List of the tutorials:
 
 
 ## Changelog
+
+**version 0.5**
+- Rename .xjs scripts to .node.js scripts
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -356,8 +359,9 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- rename .xjs extension to .node.js
 - HTTPS
+- FAQ page
+- remove cache from require
 - Automatically adding headers to requests
 - Block remote IP
 - Block mime type
