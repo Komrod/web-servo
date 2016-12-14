@@ -28,3 +28,8 @@ example/log/*
 ehthumbs.db
 Thumbs.db
 
+# SSL specific
+######################
+example/ssl/example.crt
+example/ssl/example.key
+

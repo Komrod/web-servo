@@ -312,6 +312,8 @@ List of the tutorials:
 
 **version 0.5**
 - Rename .xjs scripts to .node.js scripts
+- Fix using another file for config
+- Adding script to generate local SSL certificate
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -359,16 +361,18 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- HTTPS
+- Adding HTTPS protocol
 - FAQ page
-- remove cache from require
+- Tutorial how to create an HTTPS server
+- remove cache from require, optional
+- Rename the example dir for custom error page
+- Chainable function to exit on error
 - Automatically adding headers to requests
 - Block remote IP
 - Block mime type
 - Block url
 - Function to add and remove alias
 - Function to add and remove password protected directory
-- separate tutorials and doc from readme
 - Timeout for a page / script
 - Build an API REST
 - setup function to automatically build a server
