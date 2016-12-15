@@ -355,10 +355,11 @@ List of the tutorials:
 ## Changelog
 
 **version 0.5**
+- Adding HTTPS protocol
 - Rename .xjs scripts to .node.js scripts
 - Fix using another file for config
 - Adding script to generate local SSL certificate
-- Adding HTTPS protocol
+- Tutorial how to create an HTTPS server
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -406,7 +407,6 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- Tutorial how to create an HTTPS server
 - remove cache from require, optional
 - Rename the example dir for custom error page
 - Chainable function to exit on error

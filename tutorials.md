@@ -109,6 +109,8 @@ Cleanup temporary files.
   rm iamgroot.pass.key iamgroot.csr
 ```
 
+### Configure the server
+
 You now have the 2 SSL files. You need to configure the files in the config file of Web-servo, it may looks like this (in config.json):
 
 ```
@@ -137,9 +139,14 @@ Executing this script runs the server :
   Server listening on: https://localhost:443
 ```
 
-You can now access the server on https://localhost/. You may have a warning because your local SSL certificate is not validated by a trusted source. But it will run properly.
+### Finally
+
+You can now access the server on https://localhost/. If you are using a locally generated certificate, you may have a warning because your certificate is not validated by a trusted source. But it will run properly.
 
 Way to disable the warning:
 - [For Internet Explorer](https://www.poweradmin.com/help/sslhints/ie.aspx)
 - [For Chrome](https://support.google.com/chrome/answer/99020)
 - [For Firefox](http://ccm.net/faq/14655-firefox-disable-warning-when-accessing-secured-sites)
+
+If your certificate files are invalid or corrupted, there might be no errors while running the server but your browser will prevent you to process the requests.
+
