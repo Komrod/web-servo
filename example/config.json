@@ -7,9 +7,9 @@
     "default": "index.html",
     "script": "node.js",
     "error": {
-      "401": "page/401.html",
-      "404": "page/404.html",
-      "500": "page/500.html"
+      "401": "page/error/401.html",
+      "404": "page/error/404.html",
+      "500": "page/error/500.html"
     }
   },
   "url": {

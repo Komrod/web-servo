@@ -411,7 +411,6 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- Remove cache from require, optional
 - Rename the example dir for custom error page
 - Chainable function to exit on error
 - Auto exit on error, optional
