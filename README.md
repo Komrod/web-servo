@@ -367,6 +367,7 @@ List of the tutorials:
 - remove cache from require, optional
 - Rename the example dir for custom error page
 - Chainable function to exit on error
+- Auto exit on error, optional
 - Automatically adding headers to requests
 - Block remote IP
 - Block mime type
