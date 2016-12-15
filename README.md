@@ -41,23 +41,27 @@ Launch the server with one line of script in your javascript file:
   require('web-servo').start();
 ``` 
 
-Change server directory:
+Change server directory from inside node script:
 ``` 
   var ws = require('web-servo');
   ws.setDir('../somedir/').start();
 ``` 
 
 **For regular HTTP files:**
-When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the node script file extension (by default .node.js). The returned mime type depends on the file extension.
+When a client request an URL, the server will return the content of the file to the client, only when the extension does not match with the node script file extension (by default .node.js). The returned mime type depends on the file extension.
 
 **For node JS script:**
-When the client request an URL with the script extension (by default .node.js), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
+When the client request an URL with the script extension (by default .node.js), the server will execute the node script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
 
 **For non existing files:**
 If file is not here, server will return the 404 error page.
 
+**Other errors:**
+There is some optional password protection, not allowed HTTP methods etc ... So in some cases, the server can alors returns 401, 405 error codes.
 
-Example of node JS script that returns HTML:
+A node page is a file placed in the "www" directory of the server. It can be "/www/test.node.js" and requested by the server from http://localhost/test.node.js".
+
+Example of node page that returns HTML:
 ```
   // As this script runs in the server, this will show in the console
   console.log('test');
@@ -71,7 +75,7 @@ Example of node JS script that returns HTML:
 
 ```
 
-Simple node JS script that returns nothing:
+Simple node page that returns nothing:
 ```
   // We don't use module.exports so we can't return anything
   // We also don't know anything about the request (parameters, type ...)
@@ -87,13 +91,13 @@ Simple node JS script that returns nothing:
 
 When you are requesting a node script, you can retrieve the GET and POST parameters of the HTTP request. You can also access the request and response object for additional informations and actions.
 
-If you want the script to work, you should place it in the WWW directory in a file with a .node.js extension and request the correct URL. For a file "test.node.js" directly in WWW directory with the default server running on port 80, the request URL would be "http://localhost:80/test.node.js".
+If you want the script to work, you should place it in the "www" directory in a file with a .node.js extension and request the correct URL. For a node page "test.node.js" directly in "www" directory with the default server running on port 80, the request URL would be "http://localhost:80/test.node.js".
 
-GET and POST parameters are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
+GET and POST fields are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
 
 When you send a file with a POST request, the file is uploaded in the server. The location is in the temporary files directory of the operating system. An object containing the Meta data of the file is set in the parameters object.
 
-**Example of the basic structure:**
+**Example of the basic structure of a node page:**
 ```
   module.exports = function(request, response, parameters, ws) {
     // request: HTTP request by client
@@ -106,7 +110,7 @@ When you send a file with a POST request, the file is uploaded in the server. Th
 
 ```
 
-**Example of a script that returns the parameters list:**
+**Example of a node page that returns the parameters list:**
 ```
   module.exports = function(request, response, parameters, ws) {
     var str = '';
@@ -117,7 +121,7 @@ When you send a file with a POST request, the file is uploaded in the server. Th
   };
 ``` 
 
-**Example of a file upload:**
+**Example of a file upload with a node page:**
 ```
   module.exports = function(request, response, parameters, ws) {
     var str = '';
@@ -359,7 +363,7 @@ List of the tutorials:
 - Rename .xjs scripts to .node.js scripts
 - Fix using another file for config
 - Adding script to generate local SSL certificate
-- Tutorial how to create an HTTPS server
+- Tutorial how to create a HTTPS server
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -407,20 +411,21 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- remove cache from require, optional
+- Remove cache from require, optional
 - Rename the example dir for custom error page
 - Chainable function to exit on error
 - Auto exit on error, optional
 - Block remote IP
+- Include empty folders with .gitkeep
 - Automatically adding headers to requests
 - FAQ page
+- HTTPS server using .pfx file
 - Block mime type
 - Block url
 - Function to add and remove alias
 - Function to add and remove password protected directory
 - Timeout for a page / script
 - Build an API REST
-- setup function to automatically build a server
+- Setup function to automatically build a server
 - Launch from command line (port, dir ...)
-- Cache system
 - Run multiple types of script (PHP)
