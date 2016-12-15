@@ -72,3 +72,74 @@ Create a simple "index.html" file and put it in "myProject/www/":
 Now open a browser and request http://localhost:9000/ you should see the Hello world page. You can now build a whole website inside the WWW directory with images, CSS, JS ...
 
 
+## Make a HTTPS server
+
+You can run a web server over HTTPS protocol. You will need the SSL key file and the SSL certificate file.
+If you want to run your server locally, you can generate those files on your computer with some commands, it will require OpenSSL installed. 
+
+### Generate local SSL files by script
+
+There is a shell script in example/ssl/ that can do it for you. How to use it :
+```
+  cd example/ssl
+  ./createFile.sh
+```
+Follow instructions. It's important to type the correct Common Name (CN or FQDN). The generated files are "example.key" and "example.crt".
+
+### Generate local SSL files manually
+
+You can generate manually those files by typing the commands yourself.
+```
+  openssl genrsa -des3 -passout pass:x -out iamgroot.pass.key 2048
+  openssl rsa -passin pass:x -in iamgroot.pass.key -out iamgroot.key
+```
+
+You must know your local hostname or your certificate will not work.
+```
+  hostname
+```
+
+Your host name is the response to field Common Name (CN or FQDN).
+```
+  openssl x509 -req -days 365 -in iamgroot.csr -signkey iamgroot.key -out iamgroot.crt
+```
+
+Cleanup temporary files.
+```
+  rm iamgroot.pass.key iamgroot.csr
+```
+
+You now have the 2 SSL files. You need to configure the files in the config file of Web-servo, it may looks like this (in config.json):
+
+```
+  {
+    "server": {
+      "port": "443",
+      "ssl": {
+        "enabled": true,
+        "key": "ssl/iamgroot.key",
+        "cert": "ssl/iamgroot.crt"
+      }
+    }
+  }
+```
+Run your server with a simple line in a node script
+
+```
+  require('web-servo').start();
+```
+
+Executing this script runs the server :
+
+```
+  Using config file "C:\Users\PR033\git\web-servo\example\config_https.json"
+  Using WWW directory "C:\Users\PR033\git\web-servo\example\www"
+  Server listening on: https://localhost:443
+```
+
+You can now access the server on https://localhost/. You may have a warning because your local SSL certificate is not validated by a trusted source. But it will run properly.
+
+Way to disable the warning:
+- [For Internet Explorer](https://www.poweradmin.com/help/sslhints/ie.aspx)
+- [For Chrome](https://support.google.com/chrome/answer/99020)
+- [For Firefox](http://ccm.net/faq/14655-firefox-disable-warning-when-accessing-secured-sites)

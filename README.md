@@ -11,16 +11,14 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 - Handle GET, POST and file upload
 - Configuration in a JSON file
 - Log management of errors and access
-- Working example
+- HTTPS web server
 - [Tutorials](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 - Executing node script on the server and output result
 - Debug log to fix your node script
-- URL alias
-- Password protection
+- URL alias, password protection
 - onBeforeRequest and onAfterRequest events
 - Error pages customization
 - Descriptive log in the console
-
 
 ## Install
 
@@ -149,6 +147,46 @@ When you send a file with a POST request, the file is uploaded in the server. Th
   };
 ``` 
 
+
+## HTTPS server
+
+You can run a web server over HTTPS protocol. You will need the SSL key file and the SSL certificate file.
+If you want to run your server locally, you can generate those files on your computer with some commands, it will require OpenSSL installed. 
+
+[You can access a more complete tutorial for the HTTPS server here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
+
+Then, you need to configure the path of the SSL files (.key and .crt) in the config file, it may looks like this (in config.json):
+
+```
+{
+  "server": {
+    "port": "443",               <-- port of the HTTPS server
+    "ssl": {
+      "enabled": true,           <-- HTTPS protocol is enabled
+      "key": "ssl/iamgroot.key", <-- SSL key file
+      "cert": "ssl/iamgroot.crt" <-- SSL certificate file
+    }
+  },
+
+```
+
+Run your server with a simple line in a node script
+
+```
+  require('web-servo').start();
+```
+
+Executing this script runs the server :
+
+```
+  Using config file "C:\Users\PR033\git\web-servo\example\config_https.json"
+  Using WWW directory "C:\Users\PR033\git\web-servo\example\www"
+  Server listening on: https://localhost:443
+```
+
+You can now access the server on https://localhost/. You may have a warning because your local SSL certificate is not validated by a trusted source. But it will run properly.
+
+
 ## Methods
 
 ### setDir(dir)
@@ -229,6 +267,11 @@ The configuration file "config.json" must be located in the server directory. Th
   "server": {
     "port": "80",                 <-- port of the web server
     "dir": "www/"                 <-- directory of the www root (from server dir)
+    "ssl": {
+      "enabled": false,           <-- if the HTTPS protocol is enabled
+      "key": "",                  <-- SSL key file of the server
+      "cert": ""                  <-- SSL certificate file of the server
+    }
   },
   "page": {
     "script": "node.js",          <-- extension of the JS to execute server side
@@ -306,6 +349,7 @@ The server is started. Open your browser and go to these locations:
 
 List of the tutorials:
 - Make a server from scratch
+- Make a HTTPS server
 
 
 ## Changelog
@@ -314,6 +358,7 @@ List of the tutorials:
 - Rename .xjs scripts to .node.js scripts
 - Fix using another file for config
 - Adding script to generate local SSL certificate
+- Adding HTTPS protocol
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -361,15 +406,14 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- Adding HTTPS protocol
-- FAQ page
 - Tutorial how to create an HTTPS server
 - remove cache from require, optional
 - Rename the example dir for custom error page
 - Chainable function to exit on error
 - Auto exit on error, optional
-- Automatically adding headers to requests
 - Block remote IP
+- Automatically adding headers to requests
+- FAQ page
 - Block mime type
 - Block url
 - Function to add and remove alias
