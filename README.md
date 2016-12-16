@@ -378,6 +378,10 @@ List of the tutorials:
 
 ## Changelog
 
+**version 0.5.1**
+- Better SSL script generation
+- Update docs
+
 **version 0.5**
 - Adding HTTPS protocol
 - Rename .xjs scripts to .node.js scripts
