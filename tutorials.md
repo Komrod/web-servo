@@ -87,9 +87,9 @@ If you want to run your server locally, you can generate those files on your com
 
 There is a shell script in the root directory that can do it for you. How to use it :
 ```
-  ./generateSSL.sh example/ssl/
+  ./generateSSL.sh example/ssl/ example
 ```
-This will generate files in the "example/ssl/" directory.
+This will generate the files in the "example/ssl/" directory.
 After succefull execution, the generated files are "example/ssl/example.key" and "example/ssl/example.crt".
 
 ### Generate local SSL files manually

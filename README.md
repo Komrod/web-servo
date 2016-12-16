@@ -159,6 +159,11 @@ If you want to run your server locally, you can generate those files on your com
 
 [You can access a more complete tutorial for the HTTPS server here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 
+Execute this script on the root directory of the project :
+```
+  ./generateSSL.sh example/ssl/ example
+```
+
 Then, you need to configure the path of the SSL files (.key and .crt) in the config file, it may looks like this (in config.json):
 
 ```
