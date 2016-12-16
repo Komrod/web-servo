@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 echo "-----------------------------------"
 echo "Create local SSL files"
@@ -100,4 +100,3 @@ if [ -e "$name.key" ] && [ -e "$name.crt" ]; then
 fi
 
 exit 1;
-
