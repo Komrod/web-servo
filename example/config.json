@@ -1,7 +1,13 @@
 {
   "server": {
     "port": "80",
-    "dir": "www/"
+    "dir": "www/",
+    "exitOnError": true,
+    "ssl": {
+      "enabled": false,
+      "key": "",
+      "cert" : ""
+    }
   },
   "page": {
     "default": "index.html",
