@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 echo "-----------------------------------"
 echo "Create local SSL files"
@@ -21,7 +21,7 @@ fi
 # Clean 
 ##########################################
 
-rm ssl_hostname.txt captn.csr captn.key captn.pass.key captn.crt > /dev/null 2>&1
+rm ssl_hostname.txt example.csr example.key example.pass.key example.crt > /dev/null 2>&1
 
 
 ##########################################
@@ -45,21 +45,21 @@ echo $'\n\n\n' >> ssl_hostname.txt
 # Generate key
 ##########################################
 
-openssl genrsa -des3 -passout pass:x -out captn.pass.key 2048 >/dev/null 2>&1
-openssl rsa -passin pass:x -in captn.pass.key -out captn.key >/dev/null 2>&1
+openssl genrsa -des3 -passout pass:x -out example.pass.key 2048 >/dev/null 2>&1
+openssl rsa -passin pass:x -in example.pass.key -out example.key >/dev/null 2>&1
 
 ##########################################
 # Generate key
 ##########################################
 
-cat ssl_hostname.txt | openssl req -new -key captn.key -out captn.csr >/dev/null 2>&1
+cat ssl_hostname.txt | openssl req -new -key example.key -out example.csr >/dev/null 2>&1
 
 
 ##########################################
 # Generate certificate
 ##########################################
 
-openssl x509 -req -days 365 -in captn.csr -signkey captn.key -out captn.crt 
+openssl x509 -req -days 365 -in example.csr -signkey example.key -out example.crt 
 #>/dev/null 2>&1
 
 
@@ -67,14 +67,14 @@ openssl x509 -req -days 365 -in captn.csr -signkey captn.key -out captn.crt
 # Remove temp files
 ##########################################
 
-rm captn.pass.key captn.csr ssl_hostname.txt > /dev/null 2>&1
+rm example.pass.key example.csr ssl_hostname.txt > /dev/null 2>&1
 
 
 ##########################################
 # Detects error
 ##########################################
 
-if [ ! -e "captn.key" ] || [ ! -e "captn.crt" ]; then
+if [ ! -e "example.key" ] || [ ! -e "example.crt" ]; then
     echo "Fail to generate the files. Aborting."
 fi
 
@@ -83,13 +83,13 @@ fi
 # Exit
 ##########################################
 
-if [ -e "captn.key" ] && [ -e "captn.crt" ]; then
+if [ -e "example.key" ] && [ -e "example.crt" ]; then
 	echo "Successfully created"
 	dir=${PWD##*/}  
 	echo "-----------------------------------"
 	echo "SSL files:"	
-	echo "- $dir/captn.key"
-	echo "- $dir/captn.crt"
+	echo "- $dir/example.key"
+	echo "- $dir/example.crt"
     exit 0;
 fi
 
