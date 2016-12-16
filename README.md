@@ -157,7 +157,7 @@ When you send a file with a POST request, the file is uploaded in the server. Th
 You can run a web server over HTTPS protocol. You will need the SSL key file and the SSL certificate file.
 If you want to run your server locally, you can generate those files on your computer with some commands, it will require OpenSSL installed. 
 
-[You can access a more complete tutorial for the HTTPS server here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-https-server)
+[You can access a more complete tutorial for the HTTPS server here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 
 Then, you need to configure the path of the SSL files (.key and .crt) in the config file, it may looks like this (in config.json):
 
@@ -167,8 +167,8 @@ Then, you need to configure the path of the SSL files (.key and .crt) in the con
     "port": "443",               <-- port of the HTTPS server
     "ssl": {
       "enabled": true,           <-- HTTPS protocol is enabled
-      "key": "ssl/iamgroot.key", <-- SSL key file
-      "cert": "ssl/iamgroot.crt" <-- SSL certificate file
+      "key": "ssl/example.key",  <-- SSL key file
+      "cert": "ssl/example.crt"  <-- SSL certificate file
     }
   },
 
@@ -188,7 +188,7 @@ Executing this script runs the server :
   Server listening on: https://localhost:443
 ```
 
-You can now access the server on https://localhost/. You may have a warning because your local SSL certificate is not validated by a trusted source. But it will run properlyi, most browsers will give you the option to continue anyway.
+You can now access the server on https://localhost/. You may have a warning because your local SSL certificate is not validated by a trusted source. But it will run properly.
 
 
 ## Methods

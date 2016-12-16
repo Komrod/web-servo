@@ -3,8 +3,9 @@
 
 ## Table of contents
 
-- (Make a server from scratch](https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-server-from-scratch)
-- (Create a HTTPS server)[https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-https-server]
+- [Make a server from scratch](https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-server-from-scratch)
+- [Create a HTTPS server](https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-https-server)
+
 
 ## Make a server from scratch
 
@@ -84,23 +85,24 @@ If you want to run your server locally, you can generate those files on your com
 
 ### Generate local SSL files by script
 
-There is a shell script in example/ssl/ that can do it for you. How to use it :
+There is a shell script in the root directory that can do it for you. How to use it :
 ```
-  cd example/ssl
-  ./createFile.sh
+  ./generateSSL.sh example/ssl/
 ```
-Follow instructions. It's important to type the correct Common Name (CN or FQDN). The generated files are "example.key" and "example.crt".
+This will generate files in the "example/ssl/" directory.
+After succefull execution, the generated files are "example/ssl/example.key" and "example/ssl/example.crt".
 
 ### Generate local SSL files manually
 
 You can generate manually those files by typing the commands yourself. You can go to the directory you want to create the SSL files "example.crt" and "example.key".
 
 ```
+  cd example/ssl/
   openssl genrsa -des3 -passout pass:x -out example.pass.key 2048
   openssl rsa -passin pass:x -in example.pass.key -out example.key
 ```
 
-You must know your local hostname or your certificate will not work.
+You must know your local hostname or else your certificate will not work.
 ```
   hostname
 ```
@@ -115,9 +117,8 @@ Cleanup temporary files.
   rm example.pass.key example.csr
 ```
 
-If everything runs properly, you now have the 2 files "example.crt" and "example.key". They are ready to use with the example HTTPS server. Copy them in /example/ssl/.
+If everything runs properly, you now have the 2 files "example.crt" and "example.key". They are ready to use with the example HTTPS server. They must be in the directory "example/ssl/".
 If you use them in another project, you can also rename them.
-
 
 ### Configure the server
 
