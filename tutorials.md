@@ -1,6 +1,11 @@
 
 # Tutorials
 
+## Table of contents
+
+- (Make a server from scratch](https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-server-from-scratch)
+- (Create a HTTPS server)[https://github.com/Komrod/web-servo/blob/master/tutorials.md#make-a-https-server]
+
 ## Make a server from scratch
 
 Assuming you start from nothing, install Node (https://nodejs.org/en/download/) and open a console. Then create a directory for your project and install the web-servo module:
@@ -88,10 +93,11 @@ Follow instructions. It's important to type the correct Common Name (CN or FQDN)
 
 ### Generate local SSL files manually
 
-You can generate manually those files by typing the commands yourself.
+You can generate manually those files by typing the commands yourself. You can go to the directory you want to create the SSL files "example.crt" and "example.key".
+
 ```
-  openssl genrsa -des3 -passout pass:x -out iamgroot.pass.key 2048
-  openssl rsa -passin pass:x -in iamgroot.pass.key -out iamgroot.key
+  openssl genrsa -des3 -passout pass:x -out example.pass.key 2048
+  openssl rsa -passin pass:x -in example.pass.key -out example.key
 ```
 
 You must know your local hostname or your certificate will not work.
@@ -101,13 +107,17 @@ You must know your local hostname or your certificate will not work.
 
 Your host name is the response to field Common Name (CN or FQDN).
 ```
-  openssl x509 -req -days 365 -in iamgroot.csr -signkey iamgroot.key -out iamgroot.crt
+  openssl x509 -req -days 365 -in example.csr -signkey example.key -out example.crt
 ```
 
 Cleanup temporary files.
 ```
-  rm iamgroot.pass.key iamgroot.csr
+  rm example.pass.key example.csr
 ```
+
+If everything runs properly, you now have the 2 files "example.crt" and "example.key". They are ready to use with the example HTTPS server. Copy them in /example/ssl/.
+If you use them in another project, you can also rename them.
+
 
 ### Configure the server
 
@@ -119,19 +129,21 @@ You now have the 2 SSL files. You need to configure the files in the config file
       "port": "443",
       "ssl": {
         "enabled": true,
-        "key": "ssl/iamgroot.key",
-        "cert": "ssl/iamgroot.crt"
+        "key": "ssl/example.key",
+        "cert": "ssl/example.crt"
       }
     }
   }
 ```
-Run your server with a simple line in a node script
+If you are using the example server, the config file is already ready in "example/config_https.json".
+Then, you have to run your server with a simple line in a node script.
 
 ```
   require('web-servo').start();
 ```
 
-Executing this script runs the server :
+The script is also ready in "example/server_https.js". You can run "node example/server_https.js".
+Executing the example HTTPS server will have this result :
 
 ```
   Using config file "C:\Users\PR033\git\web-servo\example\config_https.json"
