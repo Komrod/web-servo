@@ -3,7 +3,7 @@
 
 A HTTP web server fully configurable executing node JS scripts.
 
-The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .xjs files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
+The server can return normal HTML files and assets (.css, .html, .js ...) and will execute the .node.js files as node scripts (file extension editable in config). So you can do everything a node script can do with a simple HTTP request.
 
 ## Features
 
@@ -11,16 +11,14 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 - Handle GET, POST and file upload
 - Configuration in a JSON file
 - Log management of errors and access
-- Working example
-- [Tutorials]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
+- HTTPS web server
+- [Tutorials](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 - Executing node script on the server and output result
 - Debug log to fix your node script
-- URL alias
-- Password protection
+- URL alias, password protection
 - onBeforeRequest and onAfterRequest events
 - Error pages customization
 - Descriptive log in the console
-
 
 ## Install
 
@@ -38,28 +36,32 @@ The server can return normal HTML files and assets (.css, .html, .js ...) and wi
 
 ## How to use
 
-Launch the server with one line of script:
+Launch the server with one line of script in your javascript file:
 ``` 
   require('web-servo').start();
 ``` 
 
-Change server directory:
+Change server directory from inside node script:
 ``` 
   var ws = require('web-servo');
   ws.setDir('../somedir/').start();
 ``` 
 
-**For normal HTTP files:**
-When a client request an URL, the server will return the content of the file to the client, if the extension does not match with the script file extension (by default .xjs). The returned mime type depends on the file extension.
+**For regular HTTP files:**
+When a client request an URL, the server will return the content of the file to the client, only when the extension does not match with the node script file extension (by default .node.js). The returned mime type depends on the file extension.
 
-**For node script:**
-When the client request an URL with the script extension (by default .xjs), the server will execute JS script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
+**For node JS script:**
+When the client request an URL with the script extension (by default .node.js), the server will execute the node script and return the result as HTML. The server will not stop even if there is an error in the script but will return the 500 error page. There is an additional "debug" option which track the syntax error in the console.
 
-**For unknown files:**
+**For non existing files:**
 If file is not here, server will return the 404 error page.
 
+**Other errors:**
+There is some optional password protection, not allowed HTTP methods etc ... So in some cases, the server can alors returns 401, 405 error codes.
 
-Example XJS script that returns HTML:
+A node page is a file placed in the "www" directory of the server. It can be "/www/test.node.js" and requested by the server from http://localhost/test.node.js".
+
+Example of node page that returns HTML:
 ```
   // As this script runs in the server, this will show in the console
   console.log('test');
@@ -73,7 +75,7 @@ Example XJS script that returns HTML:
 
 ```
 
-Simple XJS script:
+Simple node page that returns nothing:
 ```
   // We don't use module.exports so we can't return anything
   // We also don't know anything about the request (parameters, type ...)
@@ -89,13 +91,13 @@ Simple XJS script:
 
 When you are requesting a node script, you can retrieve the GET and POST parameters of the HTTP request. You can also access the request and response object for additional informations and actions.
 
-If you want the script to work, you should place it in the WWW directory in a file with a .xjs extension and request the correct URL. For a file "test.xjs" directly in WWW directory with the default server running on port 80, the request URL would be "http://localhost:80/test.xjs".
+If you want the script to work, you should place it in the "www" directory in a file with a .node.js extension and request the correct URL. For a node page "test.node.js" directly in "www" directory with the default server running on port 80, the request URL would be "http://localhost:80/test.node.js".
 
-GET and POST parameters are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
+GET and POST fields are merged in the "parameters" object. A POST parameter will overwrite a GET parameter with the same name.
 
 When you send a file with a POST request, the file is uploaded in the server. The location is in the temporary files directory of the operating system. An object containing the Meta data of the file is set in the parameters object.
 
-**Example of the basic structure:**
+**Example of the basic structure of a node page:**
 ```
   module.exports = function(request, response, parameters, ws) {
     // request: HTTP request by client
@@ -108,7 +110,7 @@ When you send a file with a POST request, the file is uploaded in the server. Th
 
 ```
 
-**Example of a script that returns the parameters list:**
+**Example of a node page that returns the parameters list:**
 ```
   module.exports = function(request, response, parameters, ws) {
     var str = '';
@@ -119,7 +121,7 @@ When you send a file with a POST request, the file is uploaded in the server. Th
   };
 ``` 
 
-**Example of a file upload:**
+**Example of a file upload with a node page:**
 ```
   module.exports = function(request, response, parameters, ws) {
     var str = '';
@@ -148,6 +150,46 @@ When you send a file with a POST request, the file is uploaded in the server. Th
     return str;
   };
 ``` 
+
+
+## HTTPS server
+
+You can run a web server over HTTPS protocol. You will need the SSL key file and the SSL certificate file.
+If you want to run your server locally, you can generate those files on your computer with some commands, it will require OpenSSL installed. 
+
+[You can access a more complete tutorial for the HTTPS server here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
+
+Then, you need to configure the path of the SSL files (.key and .crt) in the config file, it may looks like this (in config.json):
+
+```
+{
+  "server": {
+    "port": "443",               <-- port of the HTTPS server
+    "ssl": {
+      "enabled": true,           <-- HTTPS protocol is enabled
+      "key": "ssl/iamgroot.key", <-- SSL key file
+      "cert": "ssl/iamgroot.crt" <-- SSL certificate file
+    }
+  },
+
+```
+
+Run your server with a simple line in a node script
+
+```
+  require('web-servo').start();
+```
+
+Executing this script runs the server :
+
+```
+  Using config file "C:\Users\PR033\git\web-servo\example\config_https.json"
+  Using WWW directory "C:\Users\PR033\git\web-servo\example\www"
+  Server listening on: https://localhost:443
+```
+
+You can now access the server on https://localhost/. You may have a warning because your local SSL certificate is not validated by a trusted source. But it will run properly.
+
 
 ## Methods
 
@@ -183,6 +225,20 @@ Example:
   // Change config to show access in console
   ws.setConfigVar('log.access.console', true)
 ``` 
+
+### exitOnError(callback)
+The server is configured by default to continue even if an error occurs. This function detects if an error occurs since the configration was loaded and exit the process if there is one. You can execute it just before start the server if you want to be sure the server starts on stable condition.
+
+When the server exit the process, it call the callback function.
+
+Example:
+```
+  ws
+    .config()
+    .exitOnError()
+    .start();
+```
+
 
 ### start(callback)
 Start the server then call the callback function. Configure by default the server if config() wasn't called
@@ -229,15 +285,21 @@ The configuration file "config.json" must be located in the server directory. Th
   "server": {
     "port": "80",                 <-- port of the web server
     "dir": "www/"                 <-- directory of the www root (from server dir)
+    "exitOnError": false,         <-- if true, exit process after the first error
+    "ssl": {
+      "enabled": false,           <-- if the HTTPS protocol is enabled
+      "key": "",                  <-- SSL key file of the server
+      "cert": ""                  <-- SSL certificate file of the server
+    }
   },
   "page": {
-    "script": "xjs",              <-- extension of the JS to execute server side
+    "script": "node.js",          <-- extension of the node page to execute server side
     "default": "index.html",      <-- default page if none
     "error": {
-      "401": "page/401.html",     <-- full path of the 401 error page
-      "403": "page/403.html",     <-- full path of the 403 error page
-      "404": "page/404.html",     <-- full path of the 404 error page
-      "500": "page/500.html"      <-- full path of the 500 error page
+      "401": "page/error/401.html", <-- full path of the 401 error page
+      "403": "page/error/403.html", <-- full path of the 403 error page
+      "404": "page/error/404.html", <-- full path of the 404 error page
+      "500": "page/error/500.html"  <-- full path of the 500 error page
     }
   },
   "url": {
@@ -285,30 +347,41 @@ Execute the example server :
 ```
 
 The server is started. Open your browser and go to these locations:
-- http://localhost:80/            <-- index page (default page is index.html)
-- http://localhost:80/index.html  <-- index page directly
-- http://localhost:80/404.html    <-- Page not found
-- http://localhost:80/script.xjs  <-- script executed on the server, returns HTML
-- http://localhost:80/simple.xjs  <-- simple script executed on the server, returns nothing
-- http://localhost:80/error.xjs   <-- Error and debug log on console
-- http://localhost:80/json.xjs    <-- change the content type header response to "application/json"
-- http://localhost:80/get.xjs     <-- GET request example
-- http://localhost:80/post.xjs    <-- POST request example
-- http://localhost:80/upload.xjs  <-- file upload example
-- http://localhost:80/not-here.html <-- alias to test.html
+- http://localhost:80/                <-- index page (default page is index.html)
+- http://localhost:80/index.html      <-- index page directly
+- http://localhost:80/404.html        <-- Page not found
+- http://localhost:80/script.node.js  <-- script executed on the server, returns HTML
+- http://localhost:80/simple.node.js  <-- simple script executed on the server, returns nothing
+- http://localhost:80/error.node.js   <-- Error and debug log on console
+- http://localhost:80/json.node.js    <-- change the content type header response to "application/json"
+- http://localhost:80/get.node.js     <-- GET request example
+- http://localhost:80/post.node.js    <-- POST request example
+- http://localhost:80/upload.node.js  <-- file upload example
+- http://localhost:80/not-here.html   <-- alias to test.html
 - http://localhost:80/first/page.html <-- directory alias /first/ to /second/
-- http://localhost:80/alias-recursion-1.html <-- alias recursion error
+- http://localhost:80/alias-recursion-1.html <-- infinite alias recursion error
 
 
 ## Tutorials
 
-[You can access the tutorials here!]((https://github.com/Komrod/web-servo/blob/master/tutorials.md)
+[You can access the tutorials here!](https://github.com/Komrod/web-servo/blob/master/tutorials.md)
 
 List of the tutorials:
 - Make a server from scratch
+- Make a HTTPS server
 
 
 ## Changelog
+
+**version 0.5**
+- Adding HTTPS protocol
+- Rename .xjs scripts to .node.js scripts
+- Fix using another file for config
+- Adding script to generate local SSL certificate
+- Tutorial how to create a HTTPS server
+- Rename the example dir for custom error page
+- Chainable function to exit on error
+- Add option in config.json to exit process on error
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -356,16 +429,18 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- Automatically adding headers to requests
+
 - Block remote IP
+- Include empty folders with .gitkeep
+- Automatically adding headers to requests
+- FAQ page
+- HTTPS server using .pfx file
 - Block mime type
 - Block url
 - Function to add and remove alias
 - Function to add and remove password protected directory
-- separate tutorials and doc from readme
 - Timeout for a page / script
 - Build an API REST
-- setup function to automatically build a server
+- Setup function to automatically build a server
 - Launch from command line (port, dir ...)
-- Cache system
 - Run multiple types of script (PHP)

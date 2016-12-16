@@ -1,15 +1,21 @@
 {
   "server": {
     "port": "80",
-    "dir": "www/"
+    "dir": "www/",
+    "exitOnError": true,
+    "ssl": {
+      "enabled": false,
+      "key": "",
+      "cert" : ""
+    }
   },
   "page": {
     "default": "index.html",
-    "script": "xjs",
+    "script": "node.js",
     "error": {
-      "401": "page/401.html",
-      "404": "page/404.html",
-      "500": "page/500.html"
+      "401": "page/error/401.html",
+      "404": "page/error/404.html",
+      "500": "page/error/500.html"
     }
   },
   "url": {
