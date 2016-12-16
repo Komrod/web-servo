@@ -226,6 +226,20 @@ Example:
   ws.setConfigVar('log.access.console', true)
 ``` 
 
+### exitOnError(callback)
+The server is configured by default to continue even if an error occurs. This function detects if an error occurs since the configration was loaded and exit the process if there is one. You can execute it just before start the server if you want to be sure the server starts on stable condition.
+
+When the server exit the process, it call the callback function.
+
+Example:
+```
+  ws
+    .config()
+    .exitOnError()
+    .start();
+```
+
+
 ### start(callback)
 Start the server then call the callback function. Configure by default the server if config() wasn't called
 
@@ -271,6 +285,7 @@ The configuration file "config.json" must be located in the server directory. Th
   "server": {
     "port": "80",                 <-- port of the web server
     "dir": "www/"                 <-- directory of the www root (from server dir)
+    "exitOnError": false,         <-- if true, exit process after the first error
     "ssl": {
       "enabled": false,           <-- if the HTTPS protocol is enabled
       "key": "",                  <-- SSL key file of the server
@@ -278,13 +293,13 @@ The configuration file "config.json" must be located in the server directory. Th
     }
   },
   "page": {
-    "script": "node.js",          <-- extension of the JS to execute server side
+    "script": "node.js",          <-- extension of the node page to execute server side
     "default": "index.html",      <-- default page if none
     "error": {
-      "401": "page/401.html",     <-- full path of the 401 error page
-      "403": "page/403.html",     <-- full path of the 403 error page
-      "404": "page/404.html",     <-- full path of the 404 error page
-      "500": "page/500.html"      <-- full path of the 500 error page
+      "401": "page/error/401.html", <-- full path of the 401 error page
+      "403": "page/error/403.html", <-- full path of the 403 error page
+      "404": "page/error/404.html", <-- full path of the 404 error page
+      "500": "page/error/500.html"  <-- full path of the 500 error page
     }
   },
   "url": {
@@ -364,6 +379,9 @@ List of the tutorials:
 - Fix using another file for config
 - Adding script to generate local SSL certificate
 - Tutorial how to create a HTTPS server
+- Rename the example dir for custom error page
+- Chainable function to exit on error
+- Add option in config.json to exit process on error
 
 **version 0.4.1**
 - Support HTTP 403 error
@@ -411,9 +429,7 @@ List of the tutorials:
 - Chainable functions
 
 ## TODO
-- Rename the example dir for custom error page
-- Chainable function to exit on error
-- Auto exit on error, optional
+
 - Block remote IP
 - Include empty folders with .gitkeep
 - Automatically adding headers to requests
