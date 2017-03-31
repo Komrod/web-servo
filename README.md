@@ -437,15 +437,22 @@ List of the tutorials:
 - Launch silently, no console output
 - Chainable functions
 
+
 ## TODO
 
-- Block remote IP
+- Authorize and block remote IP
+- Handle forwarded Ip by proxy
+- Multiple Threads
+- integrated modules
 - Include empty folders with .gitkeep
+- Mini services
 - Automatically adding headers to requests
 - FAQ page
 - HTTPS server using .pfx file
 - Block mime type
 - Block url
+- Function to add aliases, optional from json file
+- Function to add services, optional from json file
 - Function to add and remove alias
 - Function to add and remove password protected directory
 - Timeout for a page / script
